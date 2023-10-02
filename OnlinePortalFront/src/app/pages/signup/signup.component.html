@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<div class="bootstrap-wrapper">
+<div class="container">
+    <div class="row">
+<div class="col-md-6 offset-md-3 ">
+  <mat-card>
+    <div class="container text-center">
+<img src="../../../assets/logo.png" alt="">
+    </div>
+<h1 class="text-center">Register Here</h1>
+<form (ngSubmit)="formSubmit()" class="text-center">
+    <mat-form-field class="full-width" appearance="fill">
+        <mat-label>Username</mat-label>
+        <textarea matInput required [(ngModel)]="user.username" name="username" placeholder="Enter Username"></textarea>
+      <mat-hint>Username Must be Unique !!</mat-hint>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>User Password</mat-label>
+        <input type="password" [(ngModel)]="user.password" name="password" matInput placeholder="Enter Your Password"/>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>User First Name</mat-label>
+        <textarea [(ngModel)]="user.firstName" name="firstName" matInput placeholder="Enter First Name"></textarea>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>User Last Name</mat-label>
+        <textarea [(ngModel)]="user.lastName" name="lastName" matInput placeholder="Enter Last Name"></textarea>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>User Email</mat-label>
+        <input type="email" required [(ngModel)]="user.email" name="email" matInput placeholder="Enter Email Address"/>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="fill">
+        <mat-label>User Phone</mat-label>
+        <input type="tel" [(ngModel)]="user.phone" name="phone" matInput placeholder="Enter Phone Number"/>
+      </mat-form-field>
+      <div class="container">
+      <button type="submit" mat-raised-button color="primary">Register</button>
+      <button style="margin-left: 20px;" mat-raised-button color="primary">Clear</button>
+      </div>
+</form>
+</mat-card>
+    </div>
+</div>
+
+</div>

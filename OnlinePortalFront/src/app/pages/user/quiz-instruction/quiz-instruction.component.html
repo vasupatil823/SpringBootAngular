@@ -1,0 +1,42 @@
+<div class="bootstrap-wrapper">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card class="mt20">
+                <mat-card-header>
+                    <mat-card-title>
+Read the instructions carefully !!
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        One step more to go
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="ml30">
+                    <h1>{{quiz.title}}</h1>
+                    <p>{{quiz.description}}</p>
+                    <mat-divider></mat-divider>
+                    <br>
+                    <h1>Important Instructions</h1>
+                    <ul>
+                        <li>This quiz is only for practice purpose.</li>
+                        <li>The total score for the quiz is based on your responses to all questions. If you respond incorrectly to a question or retake a question again and get the correct response, your quiz score will reflect it appropriately. However, your quiz will not be graded, if you skip a question or exit before responding to all the questions.</li>
+                        <li>The quizzes consists of questions carefully designed to help you self-assess your comprehension of the information presented on the topics covered in the module. No data will be collected on the website regarding your responses or how many times you take the quiz.</li>
+                        <li>Each question has <b>2</b> minutes and there are <b>{{quiz.numberOfQuestion}}</b> questions</li>
+                        <li>You have to submit this quiz within <b>{{quiz.numberOfQuestion*2}}</b> minutes.</li>
+                        <li>All questions is of MCQ types.</li>
+                    </ul>
+                    <mat-divider></mat-divider>
+                    <h1>Attempting Quiz</h1>
+                    <ul>
+                        <li>Click on <b>START</b> button to start the quiz</li>
+                        <li>After completion of test click on submit button to <b>SUBMIT</b> the result will generated after submit the test result will be generated automatically</li>
+                    </ul>
+                </mat-card-content>
+                <mat-card-actions class="text-center">
+<button (click)="startQuiz()" mat-raised-button color="primary">START</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,54 @@
+<div class="bootstrap-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+<div class="col-md-2">
+<!--instructions-->
+<h1>instructions</h1>
+</div>
+<div class="col-md-8">
+<!-- questions -->
+<ng-container *ngIf="questions">
+    <h1>Ongoing Quiz : {{questions[0].quiz.title}}</h1>
+</ng-container>
+<mat-card *ngFor="let q of questions;let i = index" class="mt10">
+    <mat-card-content>
+        <b><p>Q. {{i+1}}) <span [innerHTML]="q.content"></span></p></b>
+<mat-divider>
+</mat-divider>
+<div class="row">
+    <div class="col-md-6">
+<input type="radio"
+[value]="q.option1" name=i
+[(ngModel)]="q.givenAnswer"/>{{q.option1}}
+</div>
+    <div class="col-md-6">
+        <input type="radio"
+        [value]="q.option2"
+    name=i
+        [(ngModel)]="q.givenAnswer"/>{{q.option2}}
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <input type="radio"
+        [value]="q.option3"
+        name=i
+        [(ngModel)]="q.givenAnswer"/>{{q.option3}}
+    </div>
+    <div class="col-md-6">
+        <input type="radio"
+[value]="q.option4"
+name=i
+[(ngModel)]="q.givenAnswer"/>{{q.option4}}
+    </div>
+</div>
+    </mat-card-content>
+</mat-card>
+</div>
+<div class="col-md-2">
+    <!--progress-->
+</div>
+</div>
+    </div>
+</div>
