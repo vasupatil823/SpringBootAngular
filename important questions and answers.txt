@@ -1,0 +1,556 @@
+>> why HashSet is so important data structure ? : because it takes same time for adding,searching and removing the objects so its time complexity.
+
+>> In java we implement the hashmap with use of array of linked list. means hashmap internally uses array and linked list.
+
+bucket : any index of array contains linkedlist is called one bucket.
+
+meaning of hashing : means to change the form of data. for example we have a data as a,b,c and the hash value of this data will be something like 2586.
+
+there are different hashing algorithmn like sha1, sha256.
+
+>> Reverse a linkedlist
+
+>> Explain some exceptions : 
+
+- ArrayIndexOutOfBoundsException :
+- NullPointerException
+- StackOverflowError : this is the child class of virtual machine error, vme is a child class of Error and Error is a child class of Trowable. whenever we are performing recursive method call, one entry going to store in the stack, when the entries in stack gets overflow then we get this error. 
+- ClassCastException : while performing type casting when jvm gets any issue at runtime then this exception is thrown.
+
+- NoClassDefFoundError : child class od linkage error.when the JVM looks for any class file and that is not avsilable at runtime then we get this error.
+
+- ExceptionInInitialzerError : while initializing static variable or while initializing static block if any problem occured to JVM then this exception is raised.
+
+- IllegleArgumentException : 
+- NumberFormatException : 
+- IllegleStateException : 
+- AsertionErrorn : when assert statement fails then we get the AssertionError.
+
+Two new features came as a part of java 1.7
+1) try with resource
+2) multi-catch block
+
+
+>> Java 8 new features :: 
+
+- Lambda expressions : it is anonymous function
+
+
+
+
+- Functional Interfaces
+- Default methods and static methods
+- Predefined Functional Interfaces
+  Predicate
+  Function
+  Consumer
+  Supplier
+  etc..
+- Double Colon Operator (::)
+  Method reference
+  constructor reference
+- Streams
+- Date and Time API
+- Optional Classes
+- Nashron Javascript Engine
+etc..
+
+
+> When we want to compaire two alphabatical string we use compaireTo method, below is the example
+
+string1.compaireTo(string2)
+
+
+> interface static methods by default not available to the implementation class.
+
+
+> String, StringBuffer and StringBuilder questions.
+
+1. diff bet string and stringbuffer
+2. what is mutable and immutable ?
+3. == vs .eqauls() method in String and StringBuffer
+4. what is SCP (string constant pool)
+5. importance of SCP memory area.
+6. why SCP concept is available only for string and not for stringbuffer.
+7. why string objects are immutable and stringbuffer is mutable ?
+8. in addition to string object is there any other object that is immutable in java
+9. how to create our own immutable class
+10. final vs immutability
+11. Need to stringbuilder and differences with stringbuffer
+
+> OOPS :
+
+1. when the object creation of class is not possible.
+2. when the child class creation is not possible.
+3. what are the various modifiers available for the top level classes.
+4. which modifiers are allowed for classes inside the top level classes.
+5. use of abstract modifier and where we can use the abstract keyword
+6. Abstract class vs abstract method
+7. what is the advantage of taking method as abstract ?
+8. member modifiers
+9. Data hiding
+10. Abstraction
+11. Encapsulation
+12. ingeritance
+13. Advantages of inheritance
+14. Types of inheritances
+15. Multiple inheritance.
+16. diamond access problem or ambiguity problem
+17. while diamond access problem or ambiguity problem does not occur in case of interfaces
+18. why ambiguity or DAP does not occur for default and static methods in interfaces.
+19. cyclic inheritance.
+20. what is method overloading
+21. in overloading when the method resolution is done.
+22. what is compile time polymorphism or static polymorphism or early binding.
+23. what is automatic promotion in overloading
+24. what is overriding
+25. what is runtime polymorphism or dynamic polymorphism or late binding
+26. overrind rule until 1.4 and after 1.4
+27. what is covarient return type in overriding
+28. where cobarient is allowed
+29. Overriding rules related to method signature, return type and modifier
+30. Java -source p.java
+31. Overriding rules for access modifiers
+32. overriding rules for throws keyword.
+33. overriding rules for static methods and what is method hiding
+34. diff between method hinding and overriding
+35. Overrding rules for var args methods.
+36. overriding wrt variables and how the variable resolution is done.
+37. what is variable hiding or shadowing
+38. diff between overloading and overriding.
+39. what is polymorphism
+40. Three pillors of OOPS (Encapsulation,Inheritance,Polymorphism)
+41. what is object type casting and its important 3 rules
+42. when we get the classcastexception
+43. internal things of Object Type Casting
+44. because of type casting, internally a new object will be created or not ?
+
+
+
+>> Streams :: 
+
+1. why and how we use the stream for collection object.
+2. what is filter()
+3. what is map(),collect(), count(),sorted(), min(), max(), get(), forEach(), toArray(),Stream.of()
+4. where we can use the streams concept.
+
+
+>> java.util.concurrent package
+
+
+>> JVM Archetecture :
+
+1. what is virtual machine
+2. how many types of virtual machine is there.
+3. basic archetecture diagram of JVM
+3. what is class loader subsystem
+4. Types of class loaders
+5. how java class loader works
+6. Need of customized class loader
+7. provide code to define customize class loader
+8. Various memory areas of the jvm
+9. program to display heap memory statistics
+10. how to set maximum and minimum memory heap size.
+12. Execution engine
+13. Java native Interfaces
+14. class file structure
+15. what is JVM. where it is available.
+16. what is the work of JVM
+17. Components of JVM and what is the work of each component.
+
+
+
+>> Spring Framework
+
+. Spring Core components
+. Spring context
+. Spring AOP
+. spring DAO
+. what is IOC
+. what are the factory classes, for example DriverManager
+. how many types of IOC are there
+. what is dependency lookup and dependecy injection
+. types of dependency injection
+. what is spring bean configuration file. 
+. what is BeanFactory and uses of it.
+. how to create the IOC container using BeanFactory
+. what is cyclic dependency
+. resolving or mapping constructor argument
+. what is collection inhjection
+. how many types of collection spring supports for ingection.
+. how use the configuration in xml for collection object. and what is util namespace.
+. what is bean inheritance and its uses.
+. use of abstract element in bean configuration.
+. what is collection merging
+. what is inner beans
+. what is diff between ref and idref
+. what is bean aliasing
+. what is Null String
+. Bean Scopes
+. what is singleton class and when to make the class as singleton
+. what is bean autowiring and how many ways we can enable it ?
+. what is nested bean factories
+. what is P and C namespaces
+. what is dependency check and @Required annotation
+. what is Depends on.
+. what is Bean Lifecycle and how can we define it in spring, approaches.
+. how to define object initialization and object destroy logic in spring bean configuration file.
+. Declarative approach, programattic approach and annotation approach of bean life cycle.
+. what is Aware Interfaces
+. static factory method
+. instance factory method
+. what is ServiceLocator's
+. what is factory Bean
+. what is method replacement
+. lookup method injection
+. lookup method injection.
+. property editors.
+. internationalization.
+. diff between ApplicationContext and BeanFactory
+. what is bean post processor.
+. what is beanfactorypostprocessor and propertyplaceholderconfigurar.
+. what is event processing.
+. Annotations @Configuration and @Bean, @Required, @Autowired
+. stereotype annotations @Component, @Repository, @Service, @Controller
+. Spring java config annotations, @Inject, @Named, @Resource, @PostConstruct and @PreDestroy
+. how many ways we can use @Autowire, @Qualifier
+. Spring AOP, what are the AOP principles.
+. how many ways we can work with Aop.
+. types of advices.
+. what is dispatcherServlet and what it holds.
+. what is ApplicationContext and what it holds.
+. what is Controller
+. what is Validator
+. what is handler mapping
+. what are handler interceptorss
+. what is view resolver.
+
+>> Design Patterns :
+
+. Strategy pattern (design principle spring recommends)
+. when we should go for inheritance and when we should go for composition
+
+
+>> Spring boot
+
+. Spring boot runners
+. Anonymous inner class
+. how many ways we can read the applicarion.properties in spring boot.
+. what is the diff between @ConfigurationProperties and @Value
+. Spring boot profiles
+. dependency management in spring boot
+. dependency scopes
+. version management sysstem in spring boot
+. spring boot starter classes and use of starter class
+. Spring boot Data JPA and what fearures it supports
+. what is @Repository interface
+. JPA query methods and @Query Annotation and special parameters/Return types
+. what is the rule of defining primary key in Entity class
+. @Modifying and @Transaction annotationS
+. what is projection and types of projections in JPA
+. special type of Query methods
+. connection pooling in spring boot data
+. spring boot mongo db support.
+. what is AutoConfiguration and what things it takes care of that is no need to done by programmer.
+. what is data rendering
+. which are the spring provided containers
+. where to place html, css, js files in spring boot application
+. what is diff between Model(I) and ModelMap(C)
+. @RequestMapping, @EnableWebMvc, @ComponentScan, @PropertySource, @Entity, @Data, @ModelAttribute, @RequestParam annotation
+. Cache Management in spring boot, @EnableCaching, @Cacheable, @CacheEvict, @CachePut annotations
+. Lombok api
+. Logging using spring boot
+. Spring boot email
+. Spring boot batch processing (@EnableBatchProcessing,ItemReader<?>, ItemProcessor<?,?>, ItemWriter<?>)
+. Spring boot rest
+. how many types of methods rest controller supports, @RestController, @RequestMapping
+. Annotations to provide Inputs to Request Methods in RestController.
+. Response filtering
+. Monitoring API with actuators and how to configure it.
+. Spring boot API Explorerl with HAL Explorer
+. Spring boot security, what is CSRF
+
+
+TYPE            Annotation
+
+url?key=val     @RequestParam
+/url/val/       @PathVariable
+/url/key=val    @MatrixVariable
+Http Header     @RequestHeader
+Http Body       @RequestBody
+
+. how dispatcher servlet is configured in spring boot and to which url pattern it mapped.@PropertySource.
+. server.servlet.context-path property in spring boot.
+. where http request sends data.
+. spring boot enables json conversion by default
+
+Path Variable [Path Parameters]:--
+=>We can send data using URL (path).
+=>It supports only Primitive Data.
+Paths are two types:--
+a.>Static Path [format:/url]
+b.>Dynamic Path [format:/{key}]
+
+. media type conversion annotations
+. enable swagger ui in spring boot application
+
+
+
+>> Hibernate :
+
+. what is ORM
+. why we use hibernate
+. what is relation between JPA and hibernate
+. what is the problem with JDBC and how hibernate solves it. and how hibernate solves exception handling problem.
+. how jdbc face problem in transaction management
+. why dialect is used in hibernate
+. what is criteria class in hibernate.
+. what is caching in hibernate
+. how version feature works in hibernate and what is TimeStamp in hibernate
+. how transaction management is handled by hibernate and what is local transaction and what is global transaction.
+. what is entity relationships and types of relationship
+. what is unidirectional mapping and bidirectional mapping. what is mappedBy, joinColumn, cascade, fetchType
+. what is normalization
+. what is session
+. what is sessionfactory
+. what is hibernate dialect
+. why to use DAO for persistance tier layer
+. Get vs Load
+. rules while creating the entity classes.
+. what are hibernate tools.
+. hibernate configuration using annotation.
+. what are logical mapping annotations and physical mapping annotations.
+. hibernate annotations (@Entity, @Table, @Id, @Basic, @Column, @Unique, @UniqueConstraint, @Transient)
+. JPA vs Hibernate
+. How many levels of cache hibernate supports
+. when to use cache and what are the disadvantages
+. how the hibernate session is working for cache
+. is session object singleton or not ? why ?
+. hibernate provided key generator
+. Entity lifecycle state (Transient state, Persistent state, Detached state, Removed State)
+. Relationship object model
+. entity mapping with different collection classes.
+. working with bag collection.
+. Transaction management in hibernate.
+. what is HQL.
+
+
+>> Design Patterns : 
+
+. what is patterns and what is its use. 
+. which are the categories of Gang of four design patterns
+. what is singleton design pattern and how to create the singleton class. and provide different best approches to create the sigleton class.
+. what is eagar initialization and eagar initialization
+. what is the issue with lazy initialization of singleton class object
+. what is static block initilization.
+. how serialzation and deserialization process breaks the singleton class and how to avoid it. and what is readResolve() method.	
+. how and why to override clone method and throw CloneNotSupportedException
+. When to use singleton
+. what is Factory design pattern and when to use it.
+. what is factory method
+. what is abstract factory design pattern
+. difference between abstractfactory and factorymethods
+. what is Template method design pattern.
+. what is adapter design pattern.
+. what is Flyweight design pattern.
+. what is commanddesign pattern.
+. Decorator design pattern.
+. what is the structure of presentation tier pattern.
+. what is intercepting filter design pattern.
+. View helper design pattern.
+. Front controller design pattern.
+. Application controller and what should be the resposibilties of it.
+. what is context object.
+. which are the Business and Integration tier patterns
+. what is DAO (Data access object)
+. Business delegates and its uses
+. what is the value object and business object.
+. what is service locator design pattern
+. what is session facade.
+. what is jndi and how to configure it.
+
+> Spring Developement to developement process(end to end application process)
+
+part1 : WEB MVC + data JPA + database (SQL)
+part2 : UI Design (Bootstrap)
+Part#3:- Cache Management.
+Part#4:- Email configuration programming.
+Part#5:- Logging, UnitTesting and Integration with GIT.
+Part#6:- Cloud deployment (PCF =pivotal Cloud foundry).
+
+> Web Services
+
+. what is distributed programming and how java supports it and what are the factors that driving us to web services
+. archetecture of webservices
+. what is soap and what is structure of soap xml and why it is called application specific protocol
+. what is wsdl, what is UDDI, what is consumer and provider,
+. what is XML,DTD,
+. what are different xml parsers.
+. explain JAX-B and why it is used. what is marshelling and unmarshelling.
+. what is one time operation and run time operation in JAX-B.
+. what is XJC or schemagen
+. what is JAX-RPC and JAX-WS
+. ways of developing web services
+. what is contract first approach.
+. what is contract last approach.
+. what is endpoint
+. what is message exchange pattern.
+. what is synchrnous request reply
+. what is Asynchrnous request/reply or delayed Response
+. Message exchange formats.
+. how to create the provider and what are the steps.
+. what is SEI interface and what are the rules for writing it.
+. what is Remote interface.
+. what type of parameters SEI interface methods should take and what types of values they should return.
+. what is RemoteException and who should handle it.
+. what is wscompile tool and how to use it.
+. what is Wsdeploy tool.
+. why we need to generate the binding classes.
+. how the cosumer sends the request and how it is received and processed by provider.
+. what is jaxrpc-ri.xml 
+. what is Request processing flow.
+. how to create the cosumer.
+. what are the different elements in wsdl.
+. what is soap and what are its parts in xml.
+. what is soap namespace
+. what is soap header and soap body.
+. what is soap fault element
+. what is apache axis
+>> Restfull webservices
+. what are the principles of rest
+. what is idempotent methods
+. what is hateoas
+. prepare the rest webservices using Jercy and jboss if asked.
+. features of rest web services
+. how many ways we can create rest web services, like jercy, resteasy, spring boot, spark, jax-rs api.
+. different annotations to build the rest web service using resteasy (@Path, @Produces, @GET,@POST, @QueryParam)
+. different annotation to create the rest webservice using jercy framework(@ApplicationPath, @Peoduces, @Consumes, @PathParam, @MatrixParam)
+. header parameters (@HeaderParam)
+. Form Parameters (@FormParam)
+. Bean parameters
+. Content handlers
+. Custom content handlers
+. Complex responses
+. Exception handling
+. Async server and client
+. Caching
+. Security
+. Spring boot restfull webservices
+. @RestController Annotation (@RequestParam, @PathVariable (static path, dynamic path),@RequestHeader, @RequestBody)
+. How many types of input data RestController can take
+. Advanced rest api features
+. versioning rest api
+. different factors to consider when you version the API
+
+
+------------------- Microservices -----------------
+
+. what is microservice
+. microservice challenges
+. what is spring cloud config server and how it is usefull for configuration management
+. what is Eureka naming server and how it is used for dynamic scale up and scale down and what is service registration and service discovery
+. Spring cloud load balancer for load distribution, what is Feign and Ribbon
+. what is Zipkin for visibility and monitoring and what is netflix api gateway.
+. what is Zuul, Spring cloud gateway
+. what is Hystrix, Resilience4 for fault tolerence
+. Docker for deployment
+. Kubernetes for cloud deployment.
+. challenges with microservices and what is the solution to over come the challenge
+. what is centralized configuration for microservices and how it is configure. and where we keep the configuration.
+. which dependency we need to add in while creating microservices project.
+. how to create the spring cloud config server and which dependecies are required.
+. how to configure to pick the values from git repository in spring cloud config server
+. what is @EnableConfigServer anotation
+. how to configure the  multiple environments in git repo for spring cloud config server
+. how to connect the microservice to spring cloud config server
+. what is the bootstrap.properties and why it is used.
+. what is the use of RestTemplete.
+. what are the problems with resttemplate and how feign rest service client solves it. and what is @EnableFeignClients.
+. how to configure and use  the feign rest service client. and what is the feign proxy, @FeignClient annotation
+. how to setting up client side load balancing using ribbon. @RibbonClient. ribbon deprecated and the latest one is spring cloud client side load balancer
+. what is eureka naming server and what is the use of it.
+. how to setting up eureka naming server and what are the dependencies are required. @EnableEurekaServer, @EnableDiscoveryClient.
+. how to using eureka naming server with spring cloud load balancer.
+. What are the common features those need to be implement in every microservice. and how to implement those at the level of API Gateway.
+. how to implement Authentication, autherization and security at the level of API gateway
+. what is rate limit and how to implement Rate Limits at the level of API gateway
+. what fault tolerence and how to implement it at the level of API gateway
+. which are the various api gateways we can implement. like Zuul API Gateway, Spring Cloud Gateway and how to implement its.
+. What are the other features of spring cloud api gateway
+. what is circuit breaker. like Resilience4j and how to implement it. and how it works,@Retry,@CircuitBreaker
+. what is Rate Limiting and BulkHead feature.@RateLimiter,@Bulkhead
+. what is docker and how to deploy the microservice in it.
+
+
+
+
+>> Docker :: 
+
+docker is an open platform for developing, running and shipping applications.
+docker is an platform which packages an application and all its dependencies together in the form of containers.
+. what problem docker solved ? 
+. what is docker engine
+. what is docker file, image and container.
+  dockerfile is a text file that contains all the commands that use can call on the command line to assemble the image.
+  docker image is a template to create the docker container.
+  docker container is a running instance of a docker image, container holds entire package to run the application.
+. important docker commands.
+  docker pull <image name>
+  docker search <image name>
+  docker images
+  to run the container in detached mode and keep it continue running the command is (docker run --name <anyname> -it -d <imagename or id>)
+  docker ps (to see the running containers)
+  docker exec -it <containerid> <imageversion(for example jdk8)>
+  docker rm <containername or id>   (remove the container)
+  docker rmi <imagename>
+  docker restart <containername or id>
+  
+> creating image and push the local images to docker hub.
+  1) create docker file with name 'Dockerfile'
+  2) execute the command to build the image as 'docker build -t myubuntuimage .'
+  3) check images came or not. if came, run the image
+  .. commands
+  docker login
+  docker commit
+  docker push
+  docker copy
+  docker logs <containername>
+  docker volume
+  docker logout
+  
+> Creating image for spring boot project
+  create the jar or war file of the project
+  create the new folder for creating image
+  put our jar or war file in that folder
+  create the dockerfile
+  build the image
+  afeter the images is created run the image
+  sample working image is creaed on path D:\projects\docker projects\spring boot docker image
+  
+>> Application deployment using docker
+   what is docker compose tool and how to use it as below
+   create the jar file and keep in one folder.
+   create the new docker file.
+   and for database configuration create new docker compose file as created on D:\projects\docker projects\docker compose
+   after creating the yaml file run the below command on above path
+   docker-compose up
+   . if we got any error regarding database connection, then we need to add the networks configuration as below in both appservice and dbservice
+   networks:
+      - bootnetwork  #any name
+
+
+
+
+>> Junit and Mackito :
+   what is unit testing
+   Junit5
+   different junit annotations
+   what is assertion and how to use it and junit testing
+   @Test, assertThat,@Disable,@AfterForEach,@BeforeForEach.
+   what is mockito and when to use it and how to use it.
+   @Mock annotation, @ExtendWith(MockitoExtension.class), MockitoAnnotations.openMocks
+   
+   
+>> CI CD pipeline in Jenkins
+
+   
