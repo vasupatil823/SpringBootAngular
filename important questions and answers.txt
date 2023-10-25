@@ -551,6 +551,17 @@ docker is an platform which packages an application and all its dependencies tog
    @Mock annotation, @ExtendWith(MockitoExtension.class), MockitoAnnotations.openMocks
    
    
->> CI CD pipeline in Jenkins
-
-   
+>> CI CD pipeline using Jenkins :
+   . Jenkins automates the build and deployment process
+   . there are multiple environments like dev, test, qa, production
+   . dev environment is where multiple developers merge there codes and then integration testing is done of the project.
+   . QA environment is where QA testers perform the testing.
+   . UAT environment is where the testing is performed by the end users who validate the software from the users's perspective. and ensure that the software meets their requirement and expectations before go live.
+   . Pilot testing (preproduction environment) where the performance testing is done.
+   . production environment is where the project is going live
+   . what is CI/CD pipeline : continous intergration and continous delievery/deplloyment.
+     all the processes are automated from identifying the commit and test and deployment to different environment. there is only one process which is manual is deployment to production. when the button will be click then only the build will be deployed to production.
+   . implement the CI CD pipeline using jenkins
+   . download the jenkins war file and run it as java-jar jenkins.war
+   . jenkins password for login to ui: 73c9445dbe0743f3aff085f64b50e9aa
+   . install the required plugins and create the first admin user
