@@ -565,3 +565,133 @@ docker is an platform which packages an application and all its dependencies tog
    . download the jenkins war file and run it as java-jar jenkins.war
    . jenkins password for login to ui: 73c9445dbe0743f3aff085f64b50e9aa
    . install the required plugins and create the first admin user
+   . after installation to install the plugin in jenkins we can install in manage jenkis and plugins tab
+   . deploy to container plugin for deploying the war file to container.
+   . for configuration go to the Tools.
+   . for deploying the web application using jenkins we need to confgure it. in jenkinswebb application for example the configuration is created in local jenkins.
+   . configuring jenins on cloud.
+   
+>> which are the automated code review tools.
+   . SonarQube
+   
+>> Generics in java : 
+   . purpose of generarics
+     Type safety : 
+	             for example arrays are type safe
+				 and collection objects are not type safe
+				 for type safety arrays are there what is the need of generics ?
+				     because arrays are type safe but are not growable as they are fixed in size. so provide the type safety to the collection objects the generics are introduced.
+	 to resolve type casting problems : 
+	                                  type casting is not mandatory in arrays but in collection it is mandatory.
+	
+	So to overcome above both problems in collections generics is introduced in java 1.5 version. so the main perpose of generics are provide the type safety and also to resolve the type casting problems.
+	. Generic classes : 
+	                  
+    . how to define our own generic class.
+	. Bounded Types : how to bound the type parameter up to the perticular range. :
+	                                                               using extends keyword
+	. What is generic method and wildcard character			
+
+>> Concurrent collection : 
+   . Need of concurrent collection. how it is different from regular collections. there are below 3 major reasons.
+     1) most the classes are not thread safe. so there is a chance of data inconsitency.
+     2) there are some classes which are thrad safe and also we can make the non thread safe classes as thread safe using collections utility classes. which is performance issue.
+     3) we get the concurrent modification exception when two threads are working on same collection class object and one of thead is iterating over the collection and other one is modifying the same object then the iterator fails.
+   . concurrent collection is a thread safe.
+   . relatively performance is high.
+   . and concurrent collection never throw CMException.
+   . what are different concurrent collection classes.
+   . what is concurrentMap and its methods are putIfAbsent, remove, replace and how these methods are diff from regular methods.
+     1) ConcurrentHashMap : what is the different locking mechanism used by CCHM to provide concurrency + performance. it is cucket level lock instead of total hashmap object locking. so the other elements are allowed to operate. at a time 16 thread are allowed to performa update operation and any number of threads are allowed for read operation.
+	 2) copyonwritearraylist
+	 3) CopyOnWriteArraySet
+	 
+>> How to make the application secure : 
+   . what is diff between authentication and autherization
+   . what is OWASP
+   . what is jwt authentication
+   . what is OAuth 2.0
+   . what is CORS
+   . Input validation
+   . Request and Response Logging
+   . data encryption
+   . HTTPS
+   . Rate Limiting
+   . Security Headers
+   
+>> what are the solid priciples :
+   . what is Single Responsibility : 
+   . what is open for extension and closed for modification
+   . what is Liskov Substitution
+   . what is Interface Segregation
+   . what is Dependency Inversion
+   
+>> Large data handling : 
+   . Use right data structure.
+   . Consider Memory Efficiency: use primitive instead of objects to remove the memory overhead. use datatypes with smaller memory if the data alows.
+   . Batch Processing:
+   . Parallelism and Concurrency:
+   . Database Optimization : Consider denormalization and caching strategies for read-heavy applications.
+   . Use Buffering for I/O Operations:
+   . Profiling and Monitoring:
+   . Use External Storage and Databases:
+   
+>> How client side validation is done and what are the advantages of it.
+   . Instant Feedback
+   . Reduced Server Load
+   . Faster Response 
+   and also there are some limitations as below
+   . Security Risk: 
+   . Dependence on User's Browser:
+>> server side validations and advantages and disadvantages of it. :
+   . Security
+   . Data Integrity
+   Best Practice: It's crucial to perform both client-side and server-side validation for robust data validation. Client-side validation provides a better user experience, while server-side validation ensures the security and integrity of the data. Server-side validation should never be omitted, as it is the final line of defense against invalid or malicious data.
+   
+>> How we can make sure the data quality
+     
+   . Data Validation:
+	 . Implement Validation Rules
+     . Use Regular Expressions:
+     . Implement Cross-Field Validation:
+   . Data Cleaning : 
+     . Remove Duplicates
+	 . Handle Missing Values
+	 . Standardize Data
+	 . Address Inconsistencies:
+   . Data Profiling:
+     . Profile Your Data:
+	 . Identify Outliers
+   . Data Monitoring and Auditing:
+     . Implement Data Monitoring
+	 . Regular Audits
+   . Data Governance: 
+     . Define Data Standards
+	 . Data Stewardship
+	 . Data Policies
+   . User Training and Awareness:
+     . Training
+	 . Raise Awareness
+   . Automated Data Quality Tools
+     . Use Data Quality Tools
+	 . Implement Data Quality Checks
+   . Data Documentation:
+     . Document Metadata
+	 . Version Control
+   . Feedback Loops:
+     . Implement Feedback Loops
+   . Continuous Improvement:
+     . Continuous Assessment
+	 . Data Quality Metrics
+	 
+	 
+>> what type of security attacks are done on software :
+   . Malware
+   . phishing
+   . SQL Injection
+   . Cross-Site Scripting (XSS):
+   . Cross-Site Request Forgery (CSRF)
+   
+>> java 8 streams : 
+   . if we want to process the elements from the collection then we use the streams
+   . stream is created as Stream s = c.stream();
