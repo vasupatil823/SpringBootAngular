@@ -6,6 +6,8 @@ bucket : any index of array contains linkedlist is called one bucket.
 
 meaning of hashing : means to change the form of data. for example we have a data as a,b,c and the hash value of this data will be something like 2586.
 
+and best implementation of hashing is everytime we provide value to hashing method. it should give a same result.
+
 there are different hashing algorithmn like sha1, sha256.
 
 >> Reverse a linkedlist
@@ -16,6 +18,18 @@ there are different hashing algorithmn like sha1, sha256.
 - NullPointerException
 - StackOverflowError : this is the child class of virtual machine error, vme is a child class of Error and Error is a child class of Trowable. whenever we are performing recursive method call, one entry going to store in the stack, when the entries in stack gets overflow then we get this error. 
 - ClassCastException : while performing type casting when jvm gets any issue at runtime then this exception is thrown.
+
+3 rules of object casting as below :
+
+  A b = (C) d;
+
+  rule 1) (At compile time) the type of 'd' and 'C' must have relationship (either parent to child or child to parent or same type), otherwise we will get the compile time error.
+
+  rule 2) (At compile time) 'C' must be either same or derived type of 'A', otherwise we will get the compile time error.
+
+  rule 3) (At runtime) the underlined original object of 'd' must be either same or derived type of 'C', otherwise we will get the run time exception called cast cast exception  
+
+
 
 - NoClassDefFoundError : child class od linkage error.when the JVM looks for any class file and that is not avsilable at runtime then we get this error.
 
@@ -695,3 +709,105 @@ docker is an platform which packages an application and all its dependencies tog
 >> java 8 streams : 
    . if we want to process the elements from the collection then we use the streams
    . stream is created as Stream s = c.stream();
+   
+   
+>> Collections :
+
+
+>> Spring Security : 
+
+
+
+
+
+
+
+------------------------------------
+
+docker local test commands
+
+docker network create mynetwork
+
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=V@su@2911' -p 1401:1433 --name examsqlserver --network examserver_and_mssql_network -d mcr.microsoft.com/mssql/server:2022-latest
+
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=V@su@2911" -p 1401:1433 --name examsqlserver  --network examserver_and_mssql_network -d mcr.microsoft.com/mssql/server:2022-latest
+
+docker network connect networkname containername
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------
+
+
+initerview preparation as per the resume
+
+Docker,Jenkins,Kubernetes, what is agile, CI/CD pipeline.
+what are solid principles.
+how you make sure the data quality.
+what types of security attacks are done in software.
+spring security.
+who is business analyst and what is the work of him and how developers works with him.
+how you deployed your recent project and where you deployed your recent project.
+what was the requirement of Apache storm, jackrabbit, rabbitmq and apache ignite in your project.
+how do you handle millions of request in your application.
+what is whole process of your application and how it handles such large amount of data.
+what is the end to end flow of project developement. and what is your role in it.
+how you review the code (SonarQuibe).
+how you test your application (junit and mackito).
+how you configure metrics,alarms and monitors and manage the workload balancing.
+what is load/stress testing, unit/integration/e2e testing.
+what is SSL and how it is implemented.
+Multithreasing (java.util.concurrent package),collections (concurrent collection), OOPs, String
+how you have used the concurrency and parallelism to improve the api performance.
+how did you optimize the business logic for core applications.
+(what are the steps you followed while migrating from spring to spring boot)
+spring,spring boot,JPA
+Authentication in project
+RestFull webservices
+Design patterns
+sql server Common queries.
+microservices common questions and prepare any two features that implemented.
+lambda expressions in jdk 8 and other new features, how to use streams.
+Swift MT, iso2022
+Jackrabbit.
+socket programming
+very basic java questions.
+
+
+
+
+---------------------------------------------------------
+
+how you have implemented the multithreading in your application.
+
+what is BlockingQueue and BlockingDqueue
+what is Callable interface and how it is diff from runnable interface
+what is ConcurrentMap and what are its implementation classes.
+what is the diff between HashMap and ConcurrentHashMap.
+explain the Executor interface
+explain the ExecutorService and what is the role of Future interface in ExecutorService and what is the use of get() method.
+
+
+
+--------------------------------------------------------
+
+what is docker
+what is docker file
+what is container
+what are docker image
+
+
