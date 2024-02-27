@@ -811,3 +811,222 @@ what is container
 what are docker image
 
 
+
+
+
+---------------------  missed questions ------------------
+
+overrding rules
+junit and mockito test cases
+stream apis
+diff between map and flat map
+what is the advantages of for each loop and stream apis for each loop
+
+
+
+------------------------- Microservices annotations and important tools ----------------
+
+@EnableConfigServer
+
+
+Spring cloud config server
+
+RestTemplete
+
+Feign Rest Service Client
+@EnableFeignClients
+feign proxy
+@FeignClient
+
+Client side load balancing
+Ribbon
+@RibbonClient (deprecated)
+spring cloud client side load balancer
+@LoadBalancerClient
+
+Eureka naming server
+service registry
+service discovery
+@EnableEurekaServer
+@EnableDiscoveryClient
+@LoadBalanced
+
+Api gateway
+Authentication, autherization and security
+Rate limit
+Fault Tolearation
+Service Aggregation
+debugging
+analytics
+Spring cloud gateway
+Spring cloud discovery
+Actuator
+devtools
+@EnableDiscoveryClient
+GlobalFilter
+Building a custom routes
+RouteLocator
+
+Fault tolerence
+Rate Limiting and BulkHead feature
+@CircuitBreaker
+@RateLimiter
+@Bulkhead
+
+distributed tracing
+zipkin
+
+
+-------------------- cognizant questions -----------------
+
+1. What is the output of below Code.
+
+Employee emp1 = new Employee():
+emp1.setId(2):
+
+Employee emp2 = new Employee();
+emp2.setId(3)
+
+emp2=emp1
+
+Sysout(emp1):
+Sysout(emp2);
+
+2. How you deploy your application.
+3. What is docker, jenkins ( in detail how to create jenkins pipeline etc..)
+4. Explain microservice archetecture.
+5. Explain ExecutorService service (explain in details with example and scenario where you have used it for multithreading).
+6. Apache kafka in details. (all the questions from Consumer application)
+7. Agile methodology.
+8. Explain the projects you have worked on and technologies you have used.
+9.Roles and responsibilities in project.
+10. Jdk 8 new features and which features you have used.
+11. Recently which java version you are using.
+12. Explain the Records (new feature in java 14.)
+13. What are the new features introduced in java 21.
+14. We need to create the api that reads and add the details of employee. Please exaplain how you will create it (what will be the classes from controller to jpa classes)
+15. Create sample jpa interface that uses all the features of jpa.
+16. Create the jpa entity class that uses all the feaures of jpa with relationships.
+17. What is composite primary key and How to create the composite primary key using jpa.
+
+
+
+
+
+>> Rest API standards
+versioning
+error handling with custom error and responses means exception handling should be done properly
+content negitiation
+documentation
+we should mentain the statelessness
+we should the rest api secure
+
+>> why should we make rest api stateless ?
+
+ 
+>> exaplin all the application archetecture, like monilithik, microservice, event driven
+>> what is the major diff between monolithic archetecture and microservice archetecture
+
+client side load balancing vs server side load balancing in microservice archetecture
+what king of libraries you use to achieve the load balancing in spring boot : spring cloud load balancer and ribbon
+what is Retry pattern, rate limiter pattern, bulk head pattern
+how to idenity which microservice is functining slower : zipkin will give you the statistics for each request and microservice.
+how to indenty which microservice is giving you a exception. : there are tools like kibana, splunk, elastic search and etc.. to seach in this tools we need to id of the pertucluar service, that id we will get from the zipkin statictics.
+
+
+what is Cross-Site Request Forgery (CSRF) Protection
+
+
+
+
+
+------------------- Apache Kafka ------------------
+
+> why we use apache kafka and what problems it solves ?
+
+
+
+
+
+
+------------ Any questions for me ? --------------
+
+i am pretty interested to know about the company culture.
+what can i do to prepare myself better for this job if i get selected ?
+what is the working modal currently there ? it is a hybrid or wfo ?
+what are the training programme available for employees ?
+
+Q. why are you leaving your current organization ?
+i am seeking more apportunities to grow professionally and also i am looking for new and different chalenges as well as maintain the work life balance.
+
+
+
+>>>> Spring batch processing
+
+what is job ? and what are the steps in job ? Reader, Processor, Writer
+what is Job Repository ?
+dependency for spring batch ? spring batch
+steps to create the batch configuration :
+   create the configuration class and create the required beans in it. like Job bean.
+   use the JobRepository and JobExecutionListener
+   create the steps bean
+   use ItemReader implementation classes, like FlatFileItemReader. create the bean of FlatFileItemReader with all the file reading configuration.
+   Create Processor bean. need to create the custom processor class that implements the ItemProcessor interface and override the process method.
+   create the write bean with all the configuration. there is a ItemWriter interface and its different implementation classes like JDBCitemwriter or jpaitemwriter
+   
+>> What is PCF (Pivotal Cloud Foundry)?
+what is the use ? 
+
+
+
+>> What is DNA (Digital Native Architecture) ?
+
+
+- Explain and draw microservice archetecture
+
+- Sql join queries
+
+- How you write the optimized code, what things you take care while optimization.
+
+- What tools you used currently while developement.
+
+- How you identify the time taking queries and how you optimize it.
+
+- what design considerations you follow while coding.
+- what tools you use to identify the code issues.
+- how agile methodology is followed in your company.
+- how you identify which code issues should be bypassed and which should be fixed.
+
+
+
+---------- Agile methodology -------------------
+> Advantage of agile : customer no need to wait for the long time to deliever the product or project. and all are working together, like owner,manager,leads and deveelopers and QA to complete the project.
+> suppose we are working on customer centric project and you are regularly updating the customer and also the customer also regularly providing the feedback. and based on the feedback you making the large changes. this process is called agile methodology. where the requirement is not fixed and it can be change anytime.
+> sprint : spring is a cycle or a time interval. 
+> sprint planning : 
+> program increment planning (PI) : this is the large version of spring. we can call the quarter to one PI. PI planning is across the multiple teams and spring planning is across the one team.
+> Daily standup meeting : scrum master leads this meeting and all are involved in this meeting.
+> sprint retrospective meeting : this is done at the end of the spring.
+> Story points : it is a one task where we decide time required to complete that task. 1 story point means 1 day in some companies and also 2 story point means 1 day.
+> EPIC : large segment of one story point where it cannot be completed within single sprint.
+> Scrum master : 
+> Zero spring : 
+> Spike : 
+> Velocity : 
+> Agile principles :
+  > customer satisfaction - 
+  > requirement change at any time - 
+  > Collaborative work - 
+  > we develope and release the software in a less time span with a few number of features.
+  > Scrum team : dev team, QA team, project owner
+  > product owner and his responsibility - 
+  
+Agile flow --  > product owner will collect the requirment from customer or end user or stackholders.
+               > he will prepare one product backlog which contains the list of user stories.
+			   > spring planning meeting will be done where they will disucss what are the stories or requirement they have to complete in this specific spring.
+			   > spring backlog contains the commited user stories those needs to be completed within the sprint.
+			   > start of sprint with 1-4 weeks of duration for 1 sprint.
+			   > dailly standup
+			   > Burndown report is created by scrum master which shows the performance of the team.
+			   > sprint review meeting where show the demo to the product owner.
+			   > sprint retrospective meeting.
