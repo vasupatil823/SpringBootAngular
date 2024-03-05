@@ -1,0 +1,1471 @@
+﻿> Returning URI from post request for the newly created dresource
+> devtool automatically disables after creating jar so no need to remove the devtool dependency while deployment on production
+> Defining a custom exception structure
+> Validation for Rest API : spring boot starter validation
+> Advnaced Rest API features
+  Documentation :- 
+    Rest api consumer needs to understand your rest api :
+	it should be
+	 - Accuracy : 
+     - Consistancy : 
+	Options :- 
+	 - Manually mentain the documentation
+	 - Generate from code
+	 
+    Tow types of documentations :
+	   - Swagger :
+	   - OpenAPI : springdoc openapi
+	
+ 
+  Content negotiation :-
+  
+  <dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+		</dependency>
+  
+  
+  
+  Internationalization :-
+  
+  private MessageSource messageSource;
+  
+  messages.properties
+  good.morning.message=Good Morning
+  
+  
+  Versioning REST API :-
+  
+  Variety of options :
+  URL :- use diff URI for diff versions (Used by Twitter)
+  Request Parameter :- pass the version as a request parameter (Used by Amazon)
+  Custom Header :-   (Used by Microsoft)
+  Media Type or content negotiation or accept header : (Used by GitHub)
+      
+	  Different factors to consider when you version you API : 
+	     URI Pollution :- when we implement URL and Request parameter versioning there is a URI polution
+	                      and when we use header versioning and media type type versioning it uses the same url's so url pollution is less
+         Misuse of HTTP Headers :- http header never used for versioning parameters so it is a missuse of HTTP headers
+		 Caching :- 
+		 Can we execute the request in the browser ? :- 
+		 API documentation : 
+		 
+		 So there is not perfect solution when it comes to version every solution has a disadvantage.
+  
+  
+  HATEOAS :-Static Filtering (Hypermedia as the Engine of Application State):- 
+    > Websites allows you to :
+	  See data and perform Actions (using links)
+	> How about enhancing your rest api to tell cosumers how to perform subsequent actions ?
+	  - HATEOAS
+    
+	Implementation Options :
+	  1. Custom format and implementation
+	     > difficult to mentain
+	  2. Use Standard implmentation
+	     > HAL(JSON Hypertext Application Language) : Simply format that gives a consistent and easy way to hyperlink between resources in you api
+		 > Spring HATEOAS : Generate HAL responses with hyperlinks to resources
+		 
+	  dependency : 
+	  
+	  <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+		
+	Code :
+	
+	EntityModel<User> entityModel = EntityModel.of(user);
+		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).getAllUsers());
+		entityModel.add(link.withRel("all-users"));
+  
+  Dynamic Filtering :-
+  
+    > Serialization : convert object to stream (example JSON)
+                    Most popular serialization in java - Jackson
+    > How about customizing the REST API response returned by Jackson framework ?
+	
+	  1. Customizing the field names in response : @JsonProperty
+	  2. Only return selected fields : for ex we dont want to return a password in the response : 
+	     > Filtering :
+		   > Two Types :
+		      1. Static filtering  : Same filtering for a bean accross the different rest api
+			     > @JsonIgnoreProperties, @JsonIgnore
+			  2. Dynamic filtering :
+			     > JsonFilter with FilterProvider 
+				     
+					  
+					  //for dynamic filtering
+	@GetMapping("/dynamicfilter")
+	public MappingJacksonValue dynamicFiltering() {
+		SomeBean someBean = new SomeBean("value1","value2","value3");
+		MappingJacksonValue mappingJackSonValue = new MappingJacksonValue(someBean);
+		SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("field1","field3");
+		FilterProvider filters=new SimpleFilterProvider().addFilter("SomeBeanFilter", filter );
+		mappingJackSonValue.setFilters(filters);
+		return mappingJackSonValue;
+	}
+	     
+	      
+	
+  Monitoring (monitoring api's with spring boot actuator):-
+     
+	 > Spring Boot Actuator : Provides Spring Boot's production-ready features
+	   - monitor and manage your application in your production
+	 > Spring Boot Starter Actuator : Starter to add spring boot actuator in your application.
+	   - spring-boot-starter-actuator
+	   
+	     dependency : 
+		               <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		
+		url : http://localhost:8080/actuator
+	   
+	   #Actuator Configurations in application.properties
+       management.endpoints.web.exposure.include=*
+	   
+	 > Provides a numbers of endpoints
+	   * bean  - complete list of spring beans in your application
+	   * health - Application health information
+	   * metrics - Application metrics
+	   * mappings - Details around Request Mappings
+	   and many more....
+	   
+  Explore REST API using HAL Explorer
+     
+	 1. HAL (Json hypertext Application Language) :
+	    Simple format that gives a consistent and easy way to hyperlink between resources in your API.
+	 2. HAL Explorer :
+	    > An API explorer for RESTFul Hypermedia APIs using HAL
+		> Enable your non technical teams to play with API's 
+	 3. Spring boot HAL Explorer
+	    > auto configures HAL Explorer for spring boot projects
+		> Spring-data-rest-hal-explorer
+		
+		dependency : 
+		
+		   <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-hal-explorer</artifactId>
+		</dependency>
+		
+		and hal explorer open with url : http://localhost:8080/
+		
+
+* H2 Database :
+    
+	set the below property
+	
+	spring.datasource.url=jdbc:h2:mem:testdb (this url is printed in logs)
+	
+	then open the h2 console using url : http://localhost:8080/h2-console
+	
+* Installing Docker :   https://docs.docker.com/engine/install/
+
+install docker.
+and below is the sample link for creating sql server image and connecting the database from application with docker container.
+
+https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&pivots=cs1-powershell
+
+Command to create sql server container
+
+
+docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=Mystr0ngP@ssw0rd!' -p 1433:1433 --name sqlservername --hostname sqlserverhost -d mcr.microsoft.com/mssql/server:2022-latest
+
+> Command to launch bash shell to execute the sql commands
+
+docker exec -it sqlservername "bash"
+
+Once inside the container, connect locally with sqlcmd, using its full path.
+
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "Mystr0ngP@ssw0rd!"
+
+If successful, you should get to a sqlcmd command prompt: 1>
+
+>> The connection to sql server using docker container is pending.
+
+
+>> Implementing Basic Authentication with Spring security
+
+Add dependency :
+
+<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+default credentials for login for default login page is : 
+
+usernamec: user
+password : generated in logs
+
+on every restart new password is generated.
+
+to set the custom password, we will set in application.properties
+
+spring.security.user.name=vasu
+spring.security.user.password=vasu123
+
+this will work fine for get request and POST request it will give a 403 error which is forbidden. below is the details on this :
+
+-- Overview of how spring security works :
+ 
+   Spring security intercepts that request and it will execute series of filters. This series of filters are called filter chains. There are series of checks are done in the filter chain. below are the checks.
+   
+   1) all request should be authenticated.
+   2) if request does not have credentials or not authenticated then the login page is shown
+   3) CSRF --- > this impacts the POST and PUT request. so by desabling the CSRF the POST and PUT requests will work fine
+ 
+The above is default behaviour so here we need to customize the filter chain by using the writing all the custom configuration. below are the steps :
+
+   1) we will create a spring configuration file where we wil create a bean and we will define a filter chain and we will define all the steps of filter as a part of configuration.
+   SpringSecurityConfiguration.java is created in project. after creating this class and creating Bean is this class with no custom logic there will be no authentication which is default. no login page will be shown. every request will be success.
+   
+   2. We need to add the custom authentication in the filterChain method.
+   
+ 
+ 
+>> Microservices : ---------------------------------------------
+
+document of steps on github.
+https://github.com/in28minutes/spring-microservices/tree/master/03.microservices
+
+* Introduction :
+
+definitions : Small autonomous services that work together. and many more
+
+  - REST
+  - and small deplyable units
+  
+    microservice-1  ---> micro-2 ----> micro-3 ---> micro-4
+    
+  - and that can be cloud enabled
+  
+    micro-1      a1  a2   a3   a4   (instances)
+    
+    micro-2      b1 b2
+    
+    micro-3      c1
+    
+    micro-4      d1 d2
+ 
+    
+ >> Challenges with building micoservices`	
+ 
+ 1) Bounded context : instead creating big monolithic application when we create small small microservices there is a difficulties to identify the boundaries of each microservices. this is the evalutionary process.
+ 
+ 2) Configuration management :
+ 
+ 3) Dynamic scale up and scale down : 
+ 
+ 4) visibility :
+ 
+ 5) pack of cards : when the main microservices which is fundamental microservice when it goes down the application will goes down very easily. so we must have fault tollerence in our microservice application.
+ 
+ the solution for above challenges is spring cloud which is discussed below
+ 
+ 
+>> Introduction to Spring Cloud : 
+
+url for documentation : https://spring.io/projects/spring-cloud
+
+Spring cloud provides the solutions to the above microservices challenges
+	
+  - for Configuration management : the solution is spring cloud config server. which is used to keep the configuration in one place and expose that configuration to all the microservices.
+  
+  - For Dynamic scale up and scale down : the solutions are
+  
+    * Naming Server (Eureka) : all the instances of all the microservices will be registered with the naming server. the naming server has the two important features.
+     
+	 1) service registration : All microservices can register with the microservice.
+	 2) service discovery : Ribbon load balancing
+	 
+	* Ribbon (Client side load balancing)
+	
+	* Feign (Easier rest clients)
+	
+  - For visibility and monitoring : the solutions are below
+  
+    1) Zipkin distributed tracing : to trace the request across multiple componenets
+	2) Netflix API Gateway : 
+	
+  - For Fault tolerance : we will use Hystrix for fault tolerance.
+  
+>> Advantages of microservices architecture :
+
+   1) it enables you to adapt new technologies and processes very easily. two different technologies we can build using different technologies and communicate with each other.
+   2) Dynamic scalling :
+   3) Faster release cycles
+   
+>> Microservice components : 
+
+>> Limits microservice and Sprinng Cloud configuration :
+
+   * Each microservice has its own configuration, like database configuration or any external service configuration or the typical business logic     configurations etc.
+   * And also there are multiple environments for each microservice.
+   
+   * So for above complex configuration there is a solution called centralized configuration call spring cloud config server. and we will keep the configurations for all the environment in the Git repo. below is the diagram explaination
+   
+           CurrencyCalculationService            CurrencyExchangeServices            LimitsService
+                     |                                   |                                |
+                     |                                   |                                |
+                     |                                   |                                |
+	        --------------------------------------------------------------------------------------------				 
+           |                                 Spring Cloud Config Server                                 |
+            --------------------------------------------------------------------------------------------   
+			                                             |
+														 |
+														 |
+			                                       ----------------
+												  |     Git        |
+												   ----------------
+    * Here we connect the Spring cloud config server to the git repository and the git repo serve the configuration based on the different needs to the different instances in the different environments for all the microservices.
+	
+>> Example :
+   
+   * While creating project in spring initializer other than common dependencies we need to add Config Client dependency for connecting to the spring cloud config server.
+   
+   * Initially we need to provide the microservices details and application configuration values in application.properties file, for example below properties.
+   
+   spring.application.name=limit-service
+   server.port=8080
+   
+>> Setting up the spring cloud config server to picking up the values from spring cloud config server. here we will create another spring boot       project from spring initializer. here we need to add config server dependecy with other common dependecies. here web and other dependencies are optional initially config server and devtools is sufficient.
+  
+   * config different port for the spring-cloud-config-server
+   * First install git in the local machine, Create a Git repository to configure the configuration values and access those values from git repo in out microservice throught spring cloud config server.
+   * And store all the files in git repo that need to limits microservice.
+   * And access them thought spring-cloud-config-server.
+   * After creating local git repo. add the link to that folder in spring-cloud-config-server as a source link as below.
+     right click on project -> build path -> link source -> and browser to that folder
+   * after link git repo, right click on folder and create new file and properties file for perticular microservice. and copy the properties of application.propeties in this file.
+   * After that commit that file in local git repository. using below two commands
+     git add -A
+	 git commit -m "first commit"
+	
+   * Connect Spring cloud config server to Local Git Repository.
+     
+	 - copy the local git repo path created. and add the below property in application.properties.
+	   spring.cloud.config.server.git.uri=file://D:/git/git-local-microservices-config
+     - and launch the spring cloud config server and fire the below url
+	   
+	   http://localhost:8888/limit-service/default
+	   
+	  in url the limit-service this name should be same as we have provide to the properties file created in link source folder for perticular microservice.
+	 - first we will get the error page. for that we need add the below annotation in spring boot main application. and fire the url again.
+	   
+	   @EnableConfigServer
+	   
+    * Configuration for multiple environments in Git Repository.
+	  create the new properties file in link folder as -dev. and -qa.
+	  after that commit the new created files. so the url for dev and qa will be as below
+	  http://localhost:8888/limit-service/qa
+	  http://localhost:8888/limit-service/dev
+	  
+	* Connect the limit-service to spring-cloud-config-server.
+	   
+	  - We will connect the limit-service to spring cloud config server to use the propeties from git repo instead of default application.properties.
+	  - So first of all rename the application.propeties file to bootstrap.properties, in this file there will be only application name and url to the spring cloud config server. as below
+	    
+		spring.application.name=limit-service
+		spring.cloud.config.uri=http://localhost:8888
+	  - here application name is very critical part. it should be same as the initial name of the properties files avilable in spring cloud-config-server.
+	  
+	  Issues and resolution initially : https://stackoverflow.com/questions/66813147/springcloud-2020-0-2-upgrade-generates-testing-error
+	  
+	  - by default it will use the default propeeties from application-name.properties. to changes we need to configure the profiles.
+	 
+	* Configuring Profiles for Limits Service
+	 
+	 - here we will configure the dev and qa profile.
+	 - for configuring profiles we need to add the below property in bootstrap.properties file.
+	   
+	   spring.profiles.active=dev
+	   
+	 - we can also use this by passing as VM arguments.
+	 
+>> Creating multiple instances of currency-exchange-service which will be running on multiple ports. to know on which port we are calling the service we will return the port value in the response.
+     - run the same application on diff port by passing the diff port in VM argument as -Dserver.port=8001
+	 
+>> create another microservice, that currency conversion service.
+
+>> Connecting currency conversion service to currency exchange service.
+   - We use a RestTemplete to invoke the one service from another service.
+   - we will map the response comming from the involked service to the current entity. below is the example code.
+   
+     @GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
+	public CurrencyConversionBean convertCurrency(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal quantity) {
+		// Feign - Problem 1
+		Map<String, String> uriVariables = new HashMap<>();
+		uriVariables.put("from",from);
+		uriVariables.put("to", to);
+		ResponseEntity<CurrencyConversionBean> responseEntity = new RestTemplate().getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}", CurrencyConversionBean.class,uriVariables);
+		CurrencyConversionBean response= responseEntity.getBody();
+		return new CurrencyConversionBean(response.getId(),from,to, response.getConversionMultiple(),quantity, quantity.multiply(response.getConversionMultiple()),response.getPort());
+	}
+	
+>> Feign Rest Service Client :
+	
+>> In the above code there are lots of manual stuffs to call simple rest service from one service so to overcome this there is a Feature in Spring cloud called Feign REST Client for Service Invocation.
+  
+   - So as shown in above code as  Feign - Problem 1 : this is solved using feign
+   - For this we need to add the dependency for feign 
+     <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-feign</artifactId>
+			<version>1.4.7.RELEASE</version>
+		</dependency>
+   - Then we need to enable feign with annotation as @EnableFeignClients("package name to scan") in main class.
+   - After that we need to create the feign proxy to talk to the external microservice from one service. so we will create a interface as below.
+      
+	 @FeignClient(name = "currency-exchange-service", url = "localhost:8000")
+     public interface CurrencyExchangeServiceProxy {
+	
+	 @GetMapping("/currency-exchange/from/{from}/to/{to}")
+	 public CurrencyConversionBean retriveExchangeValue(@PathVariable String from, @PathVariable String to);
+     }
+	 
+   - To use this we need to make the changes in controller to invoke the service. below is the updated code using feign.
+   
+     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
+	public CurrencyConversionBean convertCurrencyFeign(@PathVariable String from, @PathVariable String to,
+			@PathVariable BigDecimal quantity) {
+		//Solution of above problem using feign
+		CurrencyConversionBean response = proxy.retriveExchangeValue(from, to);
+		return new CurrencyConversionBean(response.getId(), from, to, response.getConversionMultiple(), quantity,
+				quantity.multiply(response.getConversionMultiple()), response.getPort());
+	}
+	
+	
+>> Setting up client side load balancing with Ribbon :
+  
+   Problems : 
+    
+   - Suppose there are found instances running for the destination service and there is only one instance of the source service from which we are involking the external service. So as upto above step. here the currency conversion service can only talk to the one instance of the currency exchange service. because we have hardcoded the uri in proxy interface. So it should be as the currency conversion service would be able to talk to any of the four instances of t the currency exchange service. which will be called the distribute the loads between all those currency exchnage service instances.
+   - That's where Ribbon comes into the picture.
+   - Ribbon will make use of the feign proxy to distribute the calls to the destination service.
+   - To enable Ribbon we will add the dependencies and annotations as below and which will be enable in source class.
+      
+	  <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-ribbon</artifactId>
+    <version>1.4.7.RELEASE</version>
+      </dependency>
+	  
+   - below is the updated code and required properties.
+   
+     @FeignClient(name = "currency-exchange-service")
+     @RibbonClient(name = "currency-exchange-service")
+     public interface CurrencyExchangeServiceProxy {
+	
+	@GetMapping("/currency-exchange/from/{from}/to/{to}")
+	public CurrencyConversionBean retriveExchangeValue(@PathVariable String from, @PathVariable String to);
+}
+    
+	application.properties :
+	currency-exchange-service.ribbon.listOfServers=http://localhost:8000,http://localhost:8001
+	
+	problem : for every new server created we need to add the entry in properties file for that server url in above property
+	
+    Note : there is a spring boot version problem for using Ribbon.
+	Note : due to version issue i have not used ribbon in my project.
+	
+	
+>> Ribbon is deprected in latest spring boot version and the replacement for ribbon is spring cloud client side load balancer. below is link i have refer for development.
+
+https://www.baeldung.com/spring-cloud-load-balancer 
+	
+> ----- Eureka naming server ----
+
+   - When ever the microserver comes up it registers himself with eureka naming server automatically dynamically which is the solution for above problem. which is called service registration.whenever the one service wants to talk to another service it will always talk to eureka naming server and eureka will provide the available service to the called service. which is called as service discovery.
+   - Two important featured of the eureka naming server are 
+   1) Service Registration : 
+   all the instances of the all the microservice are registered with the eureka naming server. whenver the instance of the microservice comes up, it registres itself with the eureka naming server.this is called service registration.
+   
+   2) Service discovery : 
+   whenever the one service wants to talk to another service, then then service ask the eureka naming server to provide the available instances then it is called service discovery. for example currency conversion service wants to talk to currency exchange service.
+   
+   
+   - Setting up the Eureka Naming Server.
+   Create the component for the Eureka Naming server. (new spring boot project)
+   Add the code or configuration in the client microserver(currencyconversion service) to connect to the eureka naming server.
+   Add the code for connecting the server microservice(currencyexchange service) to talk to the eureka naming server. 
+
+   dependencies required :
+    
+    eureka server
+    config client
+    
+   To enable the eureka naming server we need to add the below annotation in main class.
+   @EnableEurekaServer
+
+   configure the application name in application.properties
+   spring.application.name=netflix-eureka-naming-server
+   server.port=8761
+   eureka.client.register-with-eureka=false
+   eureka.client.fetch-registry=false
+   
+ fire the url http://localhost:8761/ to access the eureka server ui.
+ 
+> Connecting client service(currency conversion service) to Eureka naming server
+
+Add the below dependency
+
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
+Add the below annotation in main application to be registered with the naming server.
+
+@EnableDiscoveryClient
+
+after that we will configure the url for eureka as  below in properties file
+
+eureka.client.service-url.default-zone=http://localhost:8761/eureka/
+
+After making changes in client service start the application, it will register itself with the eureka naming server and we can see the instance will be showing in ui.
+
+
+>> Connecting Exchange service with eureka naming server.
+
+same configuration as above
+
+Add the below dependency
+
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
+Add the below annotation in main application to be registered with the naming server.
+
+@EnableDiscoveryClient
+
+after that we will configure the url for eureka as  below in properties file
+
+eureka.client.service-url.default-zone=http://localhost:8761/eureka/
+
+After making changes in client service start the application, it will register itself with the eureka naming server and we can see the instance will be showing in ui.
+
+>> Now after the above changes we will connect the currency exchange service from currency conversion service directly using the naming server.
+
+
+>> Using eureka naming server with spring cloud load balancer.
+
+we need to create the bean in the configuration class as below.
+
+@LoadBalanced
+	@Bean
+	RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
+	
+And below is the code for controller to call the api.
+
+@GetMapping("/currency-conversion-loadbalancing-with-eureka-naming-server/from/{from}/to/{to}/quantity/{quantity}")
+	public CurrencyConversionBean convertCurrencySpringCloudLoadBalancerWithEurekaNamingServer(@PathVariable String from, @PathVariable String to,
+			@PathVariable BigDecimal quantity) {
+		//Solution of above problem using feign
+		CurrencyConversionBean response = restTemplate.getForObject("http://currency-exchange-service/currency-exchange/from/"+from+"/to/"+to+"", CurrencyConversionBean.class);
+		return new CurrencyConversionBean(response.getId(), from, to, response.getConversionMultiple(), quantity,
+				quantity.multiply(response.getConversionMultiple()), response.getPort());
+	}
+
+
+> in eureka naming server, if we get any connection exception while calling request then we need to check the below properties in eureka namming server.
+
+spring.cloud.config.enabled=false
+eureka.client.registerWithEureka=false
+
+
+>> There are many micorservices in different environments like test, QA and prod, and there are some common featured that all we need to implement for these microservices as below.
+
+------ API Gateways ------
+
+- Authentication, autherization and security
+- Rate Limits : when for specific client you want to limit the api calls per hour or per limit.
+- Fault Tolearation : it should be fault tolearance, like when the microservice is not up or when there is any issue then we should be return any default response back.
+- Service Aggregation : 
+
+The above are the all common featured across all the microservice which we have to implement. And these features are implemented at the level of API gateways. Instead of calling one microservice from another, we will call the microservice through API Gateway. and API Gateway will take care of providing all the above common features.
+API Gateway is also a great place for debugging and as well as doing analytics.
+
+>> Setting UP Zuul API Gateway.
+   - There are three steps to setting up the zuul API gateway.
+   1) Create the component for it
+   2) decide what should it do when it intercept the request. we need to implement that perticular feature.
+   3) make sure that all the requests are pass through the zuul api gateway.
+   
+for step 1 , create the spring boot project and add the below dependencies for gateway
+
+Zuul is a dependency for the old spring boot version, but in latest spring boot version (3.2.0) zuul is moved to spring cloud gateway. so in latest version below dependencies are required.
+
+below is the link from migrating from zuul to gateway
+
+https://www.springcloud.io/post/2022-03/netflix-zuul-to-spring-cloud-gateway/#gsc.tab=0
+
+Spring cloud gateway
+Spring cloud discovery
+Actuator
+devtools
+
+And in main class we need to give the annotation as @EnableDiscoveryClient to register the dateway as eureka server.
+
+After the component is created we have gateway server is ready to act as a api gateway, now we need to start the step 2 where we will implement the features one by one for each microservice after intercepting the request as below.
+
+1) Lets first implement the loggong, whenever any request will come we will log them.
+we will create a new class as GatewayLoggingFilter which will implement the GlobalFilter  : for implementation of this class please refere the project.
+
+we need to add the below properties in gateway application.properties file to access the other microservice through gateway.
+
+spring.cloud.gateway.discovery.locator.enabled=true
+
+now the url can be access through gateway, below is the url example for exchange service.
+
+
+http://localhost:8765/CURRENCY-EXCHANGE-SERVICE/currency-exchange/from/USD/to/INR
+
+So here the first call will go to API gateway, then we can implement our featured before calling the destination service like, logging, authentication etc.
+
+to allow the service url using lower case use the below property
+
+spring.cloud.gateway.discovery.locator.lower-case-service-id=true, now the lower case url will work, below is the example
+
+	http://localhost:8765/currency-conversion-service/currency-conversion-loadbalancing-with-eureka-naming-server/from/USD/to/INR/quantity/30
+	
+> Building a custom routes :
+
+1) create a configuration class : CustomRoutesAPIGatewayConfiguration.java
+
+below is the example bean.
+
+@Bean
+	public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
+		//we can write multiple routes
+		return builder.routes()
+				.route(p -> p.path("/get")
+				.filters(f->f.addRequestHeader("myHeader", "myHeaderValue").
+						addRequestParameter("Param", "ParamValue"))
+				.uri("http://httpbin.org:80"))
+				.route(p -> p.path("/currency-exchange/**").
+						uri("lb://currency-exchange-service"))
+				.route(p -> p.path("/currency-conversion-loadbalancing-with-eureka-naming-server/**").
+						uri("lb://currency-conversion-service"))
+				.route(p -> p.path("/currency-conversion-eureka/**").
+						filters(f->f.rewritePath(
+								"currency-conversion-eureka/(?<segment>.*)", 
+								"currency-conversion-loadbalancing-with-eureka-naming-server/${segment}")).
+						uri("lb://currency-conversion-service"))
+				.build();
+	}
+	
+>> Adding Global Filters :
+
+> for example : i want to log every request that goes through the gateway.
+1) create a new filter class : public class LoggingFilter implements GlobalFilter (check the created project)
+
+more on spring cloud gateway :
+. simple yet effective way to route to APIs
+. Provide cross cutting concerns
+  security
+  monitoring/metircs
+. Built on top of Spring WebFlux (Reactive approach)
+Features :
+  Match routes on any request attribute (in project there is a simple example, explore for more match attributes)
+  Define predicate and filters
+  Integrates with spring cloud discovery client (Load Balancing)
+  Path rewriting
+  
+  
+>> Circuit breaker :
+
+..................    .....................      . .................    .................      ...............
+.                .    .                   .      .                 .    .               .      .             .
+.microservice 1  .--->.microservice 2     .----->.microservice 3   .--->. microservice 4.----->. microservice 5
+.                .    .                   .      .                 .    .               .      .             .
+..................    .....................      . .................    .................      ...............         
+
+here each microservice is dependent on another microservice. so suppose any one one microservice is down than then it will impact all the microservices. For example m2 is down then it will impact m1, and if m5 is down or slow than it will impact all the other nmicroservices.
+
+* Questions :
+ - Can we retrun a fallback response if a service is down. : this is not possible in every case, for example in creadit transaction application it  not possible, but in shopping like app it is possible, we can show the default items if the service is down.
+ - Can we implement a circuit breaker pattern to reduce load. : if the microservice 4 is down, then can we return a default response instead of hitting repeatadly by microservice 3 without hitting to a microservice 5.
+ - Can we retry request in case of temporary failures ?
+ - Can we implement something like rate limiting ? : we want to call a certain microservice with specific number of times in specific period.
+ 
+Solution : Circuit breaker Framework - Resilience4j
+
+> Implementation of Resilience4j : 
+  dependecies required : 
+  
+  <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		
+	<dependency>
+			<groupId>io.github.resilience4j</groupId>
+			<artifactId>resilience4j-spring-boot2</artifactId>
+		</dependency>
+
+We need to create a new controller as CircuitBreakerController and create one api in it. below is the example
+
+@RestController
+public class CircuitBreakerController {
+	
+	private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
+
+	@GetMapping("sample-api")
+	@Retry(name = "sample-api", fallbackMethod = "fallbackresponse")   //by default it will retry for 3 times, to make the custom we need to add the propery in properties file
+	public String sampleApi() {
+		logger.info("Sample api call received");
+		ResponseEntity<String> forEntity = new RestTemplate().getForEntity("localhost:8080/dummy-api", String.class);
+		return forEntity.getBody();
+	}
+	
+	public String fallbackresponse(Exception ex) {
+		return "fallback-response";
+	}
+}
+
+
+by default it retries for 3 times. to increase the retry count we need to add the below property.
+
+resilience4j.retry.instances.sample-api.max-attempts=5
+
+below are some more properties we can make the retry more custom:
+
+resilience4j.retry.instances.sample-api.wait-duration=1s
+resilience4j.retry.instances.sample-api.enable-exponential-backoff=true
+
+In above we see how to retry the call after some time and return a default response after all the attempts are failed.
+
+- Now, what if the server never comes as up, what if it is down for a long time ?
+here we use the circuit breaker. here we will use the annotation as CircuitBreaker instead of Retry. below is the example,
+
+- what really circuit breaker do : after calling the down api for some time, it will stop calling the api and will directly return a default response.
+
+- what if the microserver is up ? the circuit breaker handles it, below is the working of circuit breaker.
+
+https://resilience4j.readme.io/docs/circuitbreaker : there are lots of configurations in this document we can use. below is the example of simple circuit breaker implementation.
+
+@RestController
+public class CircuitBreakerController {
+	
+	private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
+
+	@GetMapping("sample-api")
+	//@Retry(name = "sample-api", fallbackMethod = "fallbackresponse")   //by default it will retry for 3 times, to make the custom we need to add the propery in properties file
+	@CircuitBreaker(name = "default",fallbackMethod = "fallbackresponse")
+	public String sampleApi() {
+		logger.info("Sample api call received");
+		ResponseEntity<String> forEntity = new RestTemplate().getForEntity("localhost:8080/dummy-api", String.class);
+		return forEntity.getBody();
+	}
+	
+	public String fallbackresponse(Exception ex) {
+		return "fallback-response";
+	}
+}
+
+> Rate Limiting and BulkHead feaure : rate limiting is the feture to allowing only specific amount of request withing specific amount of time.
+
+for example in 10s i want to allow only 1000 calls. annotation is @RateLimiter(name = "default") and the limit can be set in properties files as below
+
+resilience4j.ratelimiter.instances.default.limit-for-period=2
+resilience4j.ratelimiter.instances.default.limit-refresh-period=10s
+
+below is the code example :
+
+@RestController
+public class CircuitBreakerController {
+	
+	private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
+
+	@GetMapping("sample-api")
+	//@Retry(name = "sample-api", fallbackMethod = "fallbackresponse")   //by default it will retry for 3 times, to make the custom we need to add the propery in properties file
+	//@CircuitBreaker(name = "default",fallbackMethod = "fallbackresponse")
+	@RateLimiter(name = "default")
+	public String sampleApi() {
+		logger.info("Sample api call received");
+//		ResponseEntity<String> forEntity = new RestTemplate().getForEntity("localhost:8080/dummy-api", String.class);
+//		return forEntity.getBody();
+		return "sample-api";
+	}
+	
+	public String fallbackresponse(Exception ex) {
+		return "fallback-response";
+	}
+}
+
+- And BulkHead is the configuration for how many concurrent calls are allowed. 
+
+Annotation is @Bulkhead(name = "default")
+
+and below is the property
+
+resilience4j.bulkhead.instances.default.max-concurrent-calls=10
+
+below is the code example
+
+@RestController
+public class CircuitBreakerController {
+	
+	private Logger logger = LoggerFactory.getLogger(CircuitBreakerController.class);
+
+	@GetMapping("sample-api")
+	//@Retry(name = "sample-api", fallbackMethod = "fallbackresponse")   //by default it will retry for 3 times, to make the custom we need to add the propery in properties file
+	//@CircuitBreaker(name = "default",fallbackMethod = "fallbackresponse")
+	//@RateLimiter(name = "default")
+	@Bulkhead(name = "default")
+	public String sampleApi() {
+		logger.info("Sample api call received");
+//		ResponseEntity<String> forEntity = new RestTemplate().getForEntity("localhost:8080/dummy-api", String.class);
+//		return forEntity.getBody();
+		return "sample-api";
+	}
+	
+	public String fallbackresponse(Exception ex) {
+		return "fallback-response";
+	}
+}
+
+
+
+>> Docker with Microservices :
+
+Enterprises are heading towards the microservices architecture
+ - Build small focused microservices
+ - Flexibility to innovate and build applications in different programming languages (Go,java,python,javascript,etc)
+ - But deployment become complex.
+ - How can we have one way of deploying go, java, python or javascript... microservice ?
+   - that's where container comes into picture. and most popular tool is a docker.
+   - Create docker image for each microservice
+   - the docker image contains everything a microservice needs to run.
+     - Application runtime (jdk, python or nodjs)
+	 - Application code
+	 - Dependencies
+	 - Once you have this docker image, you can run these docker containers the same way on any infrastructure.
+	   - your local machine
+	   - corporate data center
+	   - cloud (azure, google cloud, aws, etc.. all of these supports running docker containers in a wide variety of ways.)
+	   
+> Installing docker : done above.
+
+> Deploying spring boot application :
+
+> hub.docker.com : this is the docker resistry, a registry contains a lot of repositories, and lot of diff versions of diff applications. and because this is public registry, anybody can access this. but in a company we have our own registry where it can be only accessed who has a right permissions. 
+
+> Finding our application in registry : there is url as https://hub.docker.com/ourrepofoldername/reponame this contains the images of different versions which contains the application code, jdk to run the application, all the libraries that the api needs, and any other dependencies that our application might need to be able to run.
+
+> so to run the application below is the command,
+
+  docker run ourrepofoldername/reponame:version 
+  
+When we hit this command first, it download the image in which is set of bytes, and when its running its called a container.
+
+So image is a static version and container is a running version.
+
+So for the same image we can have multiple containers running. 
+
+> Docker images and docker containers.
+
+> alway run the application with argument -d (dettach mode, so that our application will be always running even after pressing ctl+c)
+
+> There diff docker commands as below,
+
+
+docker images : to list out the running images
+docker container ls -a : this shows all the containers irespective of their status.
+docker container stop id : to stop the specific container.
+
+
+
+>> Understanding docker Architecture :
+
+
+                                                        !--------------!
+														!docker client !
+														!---------------
+														       !
+															   !
+															   !
+													    Docker Daemon
+														       !
+															   !
+															   !
+				containers								 local images                   Image registry
+															                                      nginx
+																								  mysql
+																								  eureka
+																								  your-app
+																								  
+
+
+
+> The place where we running the command in is "docker client"
+> And when we type the command and press enter it is send to "docker daemon" or docker engine for execution.
+> docker daemon is reponsible for managing containers, local images and it also reponsible for pulling something from image registry if we need it or pusing a locally created image to image registry.
+
+
+>> Why docker is most popular ?
+
+- because it is very easy for developers to install the docker on local machine and use it. 
+- now a days every application is deploying on cloud and also the installation of docker on cloud is very easy.
+- initially we were using the virtual machines to deploy the applications. but the problem with the virtual machines were is these are heavy weight. because they uses two operating systems as host OS and guest OS. and that makes the whole thing little heavy. and that's where docker comes in.
+- there is onlyh one OS that is host OS and docker engine has everything including OS which takes care of the guest. and the container contains everything that is required for running the application. and there for it is very very efficient.
+
+
+* there are many docker commands. please learn docker commands.
+learn about docker official images
+
+
+------------------------ Introduction to distributed tracing : ----------------------------------------------
+
+m1--->m2---->m3----->m4----m5
+
+  - complex call chain
+  - how do you debug problems across multiple microservices.
+  - how do you trace requests across microservices
+  - Here comes the Distributed tracing.
+  
+- How distributed tracing works ? : distributed tracing server stores all the data that passes through all the micoservice and stores that information in the database. and provide us the interface which will allow us to trace the requests across multiple microservices.
+
+- Zipkin is a one of distributed tracing server we use.
+
+> Launching Zipkin container using Docker : below is the command
+
+first start the docker using docker desktop and then run the command as 'docker run -p 9411:9411 openzipkin/zipkin'
+and after running command we can launch the ui using url localhost:9411
+
+Try and connect all the microservice with zipkin.
+
+- Observability and OpenTelemetry : 
+
+- Monitoring vs observability : Monitoring is reactive. observability is proactive.
+  Monitoring is a subset of Observability.
+- Observability : how well do we understand what's happening in a System ?
+  step-1 : gather data, matics, logs, traces
+  step-2 : Get intelligence: AI/Ops and anomaly detection
+- OpenTelemetry : Collection of Tools, API's and SDK's to instrument, generate, collect and export telemetry data (matrics,logs, and traces).
+  All applications have logs, matrics and traces
+       why do we need to have seperate standard for each one of these ?
+       OpenTelemetry : how about the one standard for matrics, logs and traces ?
+	   
+Almost all cloud platforms provide support for OpenTelemetry today!
+
+> Configuring to connect the microservices with zipkin :
+
+- for spring boot 2 we use tool chain as :  Sleuth (Tracing configuration) > Brave (Tracer library) > Zipkin
+  Sleuth can only handle traces.
+
+
+For spring boot 3 we use tool chain as : Micrometer (metrics, logs, traces) > OpenTelemetry (metrics, logs, traces) > Zipkin.
+and Micrometer can handle metrics, logs, traces.
+
+step-1
+add dependencies as below :
+
+<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-observation -->
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-observation</artifactId>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-tracing-bridge-otel -->
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-tracing-bridge-otel</artifactId>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.opentelemetry/opentelemetry-exporter-zipkin -->
+<dependency>
+    <groupId>io.opentelemetry</groupId>
+    <artifactId>opentelemetry-exporter-zipkin</artifactId>
+</dependency>
+
+step-2  : Configure sampling by adding below properties in application.properties
+
+management.tracing.sampling.probability=1.0
+logging.pattern.level=%5p [${spring.application.name:},%X{traceId:-}, %X{spanId:-}]
+
+and after running the application all the details will be shown in zipkin ui.
+
+
+> The above configuration does not the show the traces for the intermediator service. for example currency exchange service.
+it shows the traces only for gateway and currency conversion. to enable the feign trances we need to add the below dependency to trace the api calls made using feign.
+
+<!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-micrometer -->
+<dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-micrometer</artifactId>
+</dependency>
+
+> for using new RestTemplate we using in some class then it does not work with micrometer. so we need to inject the RestTemplate using @Autowired.
+
+
+------------------ Running Each Microservice with docker container. --------------------
+
+for this we require all the project to be available in git hub repository.
+
+So here we will refer the below repository.
+
+https://github.com/in28minutes/spring-microservices-v2
+
+download the repo as zip and extract in local machine. and import all of them. in laptop it is done in the workspace with name. 'microservice git hub repo'
+
+Up all the applications.
+
+> Creating Container image for microservice :: 
+
+spring-boot-maven-plugin we can use which is available in our projects pom.xml. 
+
+step-1 : create the the configuration in pom.xml as below.
+
+                <configuration>
+					<image>
+						<name>in28min/mmv2-${project.artifactId}:${project.version}</name>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
+				</configuration>
+"in28min" this is the docker id which we can create a new one and give its name here. so whichever we use here should not be a problem.
+"mmv2-" there are lot of microservice with different names. so to not conflict the names we have appendded this specific version to identify it uniquely. 
+"{project.artifactId}" : this is for the project name. suppose we are creating for currency exchange service.
+"{project.version}"  : this is the tag of the project which is currently avaiable as version of the project.
+"<pullPolicy>IF_NOT_PRESENT</pullPolicy>" if the image is already present locally then use it. otherwise go and pull them.
+
+to create the image right click on the perticular project -> Run as -> maven build-> goals-> spring-boot:build-image -DskipTests-> Run
+
+after this the image will be created.  i get the error while creating the image. so i have used already created image whose url is as below.
+
+docker.io/in28min/mmv2-currency-exchange-service:0.0.1-SNAPSHOT
+
+after creating the image, we can run it using below command.
+
+docker run -p 8000:8000 in28min/mmv2-currency-exchange-service:0.0.1-SNAPSHOT
+
+after running this command, the image will be pulled and run. and that's it. the application is run as docker contaner. please test the application.
+
+Same as this create the images for all the other applications as well and run them as docker container.
+
+the running images will be visible in the docker desktop application.
+
+
+--------- Docker Compose ---------
+
+to check this is available or not using command : docker-compose --version
+
+usage : as given in above steps for running application as image. it is very complext step and it is very big process to create the images for all the microservices and run them. so docker compose is the solution to it.
+
+here we will create one yaml file where it will contain the below details.
+-------------------------------------
+
+version: '3.7'
+
+services:
+
+  currency-exchange:
+    image: in28min/mmv2-currency-exchange-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - currency-network
+
+networks:
+  currency-network:
+  
+--------------------------------------
+
+after creating this file. open the terminal having the path of the yaml file. and run the below command.
+
+docker-compose up
+
+make sure the file name is docker-compose.yaml
+
+and after running this command the application will be up
+
+and below is the content of the file where we have done for all the microservices in one file and all the applications are run in one command only
+
+------------
+version: '3.7'
+
+services:
+
+  currency-exchange:
+    image: in28min/mmv2-currency-exchange-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8000:8000"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  currency-conversion:
+    image: in28min/mmv2-currency-conversion-service:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  api-gateway:
+    image: in28min/mmv2-api-gateway:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - currency-network
+    depends_on:
+      - naming-server
+      - rabbitmq
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
+
+  naming-server:
+    image: in28min/mmv2-naming-server:0.0.1-SNAPSHOT
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - currency-network
+
+#docker run -p 9411:9411 openzipkin/zipkin:2.23
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks:
+      - currency-network
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+    restart: always #Restart if there is a problem starting up
+
+  rabbitmq:
+    image: rabbitmq:3.8.12-management
+    mem_limit: 300m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - currency-network
+
+
+networks:
+  currency-network:
+------------
+
+
+
+------------------- Docker, Kubernates and microservices ---------------------------------
+
+Kubernetes fun facts :: 
+
+the abbreavation is K8S (k ubernete(8 letters) s)
+kubernetes command : kubectl
+
+Container Orchestration :: 
+
+> Requirement : I want 10 instances of Microservices A container, 15 instances of Microservices B container and so on..
+
+> Typical features : 
+  
+  Auto Scaling : Scale containers based on demand.
+  Service Discovery : Help microservices find one another.
+  Load Balancer : Distribute load among multiple instances of a microservice.
+  Self Healing : Do health checks and replace failing instances
+  Zero downtime deployments : Release new versions without downtime.
+  
+> Container orchestration Options :
+  
+  * AWS Specific
+    - AWS Elastic Container Service (ECS)
+	- AWS Fargate : Serverless version of AWS ECS
+	
+  * Cloud Neutral - Kubernetes
+    - AWS : Elastic Kubernetes Service (EKS)
+	- Azure : Azure Kubernetes Service (AKS)
+	- GCP : Google Kubernetes Engine (GKE)
+	- EKS and AKS does not have a free tier !
+	  - we will ise GCP abd GKE !
+	  
+- With kubernetes we can deploy multiple intance without effecting the existing application. we can update the build. edit the existing application, autoscale, auto load balancing and monitors the whole thing and if one of instance goes down it automatically brings the another instance up and a lot more. below is the detail in diagram.
+
+
+----------------------------          !---------------------------!       ----------------------------
+Container Orachestration:   !         !  Features :               !       !   Cloud Neutral :        !                    
+Manage 100's of instances   !         !  Auto Scaling             !       ! Standardized Platform    !                    
+1000's of microservices     !         !   Service Discovery       !       ! on any infrastructure.   !                         
+Declaratively.              !         !  Load Balancing           !       !                          !                      
+				            !         !  Self Healing             !       !                          !                     
+							!		  !	Zero downtime deployments !       !                          !
+-----------------------------         -----------------------------       !--------------------------!                                               
+                                             Kubernetes
+
+
+> Creating Google Cloud Account : create at cloud.google.com
+
+> Creating Kebernetes Cluster with Google Kubernetes Engine.
+
+  
+  -----------------!          !------------------------!
+  ! Master Node    !          !   Worker Node          !
+  !                !          ! Run Your Application   !
+  !Manages cluster !          !                        !
+  !-----------------          !-------------------------
+  
+                      Cluster
+  
+Above is Kubernetes Architecture
+
+- Create the new project in google clouds and search for kubernetes engine and wait for othe kubernetes engine dashboard to open.
+- Creating the cluster
+  
+- Command for deploying the application on kubernetes cluster : 
+
+kubectl create deployment hello-world-rest-api --image=name of the container image available in git repository
+
+this will give the deployment id
+
+- if we want to expose the deployment to the outside world then below is the command.
+
+kubectl expose deployment hello-world-rest-api --type=LoadBalancer --port=8080
+
+- after exposing the api the kubernates creates the endpoint for our api and we can see the details in kubernates ui in Services and ingress tab. and in endpoint part the url is provided and using that url the application should be accessible.
+
+> Kubernetes Concepts ::
+
+what's happening behind the scenes : 
+
+execute the command : kubectl get events
+
+this command shows us all the events happened while creating the cluster. where different things are shown for which we can find the details using below commands.
+
+kubectl get pods : shows all the pods those were created
+kubectl get replicaset : shows all the replicaset those were created
+kubectl get deployment : shows all the deployment those were done
+kubectl get service : shows all the services those were run.
+
+- understanding each of these in details as below :
+
+> what is Pods :
+
+pods is a smallest deployable unit in kubernates
+we cannot have container in kubernates without a pod.
+our container lives inside a pod
+command : kubectl get pods -o wide : this command shows the details of the pod.
+withing the pods the containers can talk to each other using localhost
+kubectl explain pods : details about the pods
+kubectl describe pod nameoftheperticularpod : this command shows the detail about the perticular pod.
+below is the hight level diagram of pods.
+
+
+
+
+      !--------------!   !------------!
+      ! container-1  !   !container-2 !                             container-2   container-4
+      !---------------   !------------!           
+  ------------------------------------------------!             !-------------------------------------------------! 
+  !                                               !             !                                                 !
+  !             Pod 1                             !             !          Pod 2                                  !
+  !                                               !             !                                                 !
+  !                                               !             !                                                 !
+  !                                               !             !                                                 !
+  !-----------------------------------------------!             !-------------------------------------------------!
+
+-------------------------------------------------------------------------------------------------------------------!
+                                                                                            
+
+                                  Node                                                                             !
+
+
+                                                                                                                   !
+--------------------------------------------------------------------------------------------------------------------
+
+
+> Understanding replicasets. ::   kubectl get replicaset
+
+replicasets insures that the specific number of pods are running at all time.
+suppose we have deleted any pod then the replicaset will automatically create that pod with new name. actually replicaset always monitor the pods and if it found the required number of pods are available or not, if not then it creates the pods automatically.'
+- here we need to set the higher number required pods that replicaser need to maintain using below command.
+
+kubectl scale deployment hello-world-rest-api --replicas=3
+kubectl explain replicaset
+
+
+> Understanding Deployment in Kubernates : 
+
+when we are deploying the application we need a zero downtime.
+
+high level diagram of Deployment
+
+
+
+
+           pod instance-1   pod instance-2                               Pod instance-1       Pod instance-2
+		   
+		   
+		         Replica Set - 1                                                 Replica Set - 2
+				 
+				 
+				 
+				                                 Deployment
+												 
+> Understanding services in kubernetes : 
+
+The role of the service is to provide always available external interface applications which are running inside the pod. the application always the request only to the permanent ip address.
+inshort this is used for load balancing.
+
+Service types :
+
+LoadBalancer : which can be accesed from outside the cluster.
+ClusterIP : which can be accessed only inside the cluster.
+
+
+>> Understanding kubernetes archetecture in little more details.
+
+
+
+
+
+                  Master Node(s)                                                                  Worker Node(s)
+                 Manages cluster                                                                Run your application
+
+                                                         Cluster 
+
+
+> Important components that are running as a part of the master node.
+
+API Server(kube-apiserver)
+Distribute Database(etcd)
+Scheduler(kube shchedular)
+Controller Manager(kube-controller-manager)
+
+> Important components of Worker Nodes :
+
+Node Agent (kubelet)
+Networking Component (kune-proxy)
+Container Runtime (CRI - docker,rkt etc)
+PODS (multiple pods running containers)
+
+
+> Tools to deploy the applications to kuberneter through the terminal :
+
+we need to install the Gcloud which is the command line interface for the google cloud.
+we need to install the kubectl into out system to use it.
+
+There is alot in videos in deep how to deploy the application to kubernetes using command line interface or yaml configuration. i have skip the practical and watched only videos.
+
+inportant topics.
+
+- Environment variable configuration
+- centralize configuration
+- Logging and tracing
+
+> Kubernetes - Liveness and Readiness Probes
+
+microservice-1--->microservice-2---->m3------>m4----->m5
+
+> Autoscalling microservice with kubernates
+
+> Deleting Kubernetes Cluster.
+
+
+
+------------------------------------------------------------------------------------
+
+Important points for interview
+
+1) why to use the spring cloud and what spring cloud config server and how to con
+2) what is service registration and service discovery
+3) what is load balancing and which load balancer you have used in your application.
+4) what is fault tolerance and what you have used for it.
+5) how you have handled the visibililty and monitoring.
+6) how do you connect the one microservice to another microservice.
+   > using resttemplete : due to lots of manual stuff in code we use below
+   > Feign Rest Service Client and what is the proxy class and how to enable the feign
+7) how to handle the client side load balancing using ribbon. ribbon is deprecated so use spring cloud load balancer in interview.
+8) Explain eureka naming server.
+9) what is the role of api gateway and how to configure it.   
+10) explain api gateway and which api gateway you have used in your project.
+11) explan circuit breaker in detail and its reasons to use. and which circuit breaker framework you have implemented.
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------
+
+hsbc questions :
+
+there is a final constants in java then why we use Enums
+multithreading
+how to pass runtime arguments to java application using command prompt
+steps to migrate the spring application to spring boot microservices.
+exception handling
+how you deploy your code
+which feature you implemented in your microservices project.
+how can we pass multiple paramters using single variable in method. (explain varargs feature in java)
+
+
+Core java side projects : Nodrt, converters
+
+concepts used : Apache ignite, apache storm, rabbitmq, multithreading, collection, batch processing for performance improvement, authentication, spring boot daemon applications.
+types of MT messages and which are used by you and explain the mt103 in details.
+
+
+Web application side : spring,spring boot,jpa, microservices, webservices
+
+what you have done in spring : migration from old spring application to spring boot.
+what steps you have followed to migrate
+what updates you have done at database side.
+
+on which feature you have worked on microservices : circuit breaker
+
+how you deploy you project. and how the jenkins deploy your application automatically.
+
+
+worked on file manager application used, apache jackrabbit.
+
+
+* multithreading :
+
+what is locking
+what is semaphore
+ExectorService
+what is deadlock
