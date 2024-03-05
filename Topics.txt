@@ -1,0 +1,79 @@
+>> Core java
+
+Collections   : done
+Multithreading : done
+OOPS   : Done
+Exception handling : done
+Garbage Collection : done
+Abstraction : Done
+String handling : done
+java 8 (stream and parallel stream, intermediate operations in stream, diff between map and flat map in stream) : done
+JVM Internals : can be ignored and repeat in notes
+Java 8–21 : done
+JIT
+
+
+
+
+>> Frameworks :
+
+Spring core : Done
+Spring boot : Done
+JPA : Done
+Hibernate : Done
+Spring Framework 6 : Done
+Spring Boot 3 : Done
+Microservices : Done
+Design Patterns : Done
+WebServices : Done
+
+>> Database
+Any one Server
+
+
+>> Web Technologies :
+html,css,javascript (not necessery for java backend interview) : Done
+
+
+>> Testing tools
+
+Junit : Done
+mackito : Done
+
+>> Deployment and Devops and project lifecycle
+
+DevOps Tools
+Docker : Done
+Jenkins : Done
+SDLC
+agile
+scrumm
+kanban
+Putty Commands : Done
+
+
+>> Other
+
+Code review tools and other important tools : Done
+Generic Programming : Done
+Concurrency : Done
+concurrent collections : Done
+Application Security : Done
+How many ways microservice can communicate  : Done
+O auth 2.  : Done
+Diff Application Archetectures : Done
+System or software Design And Architecture : Done
+Application Containers : 
+Mastering The Principles Of SOLID : Done
+Big Data
+Apache Spark and Kafka
+Architectural Patterns
+Learn APIs
+Data structures and algorithms
+Code review : Done
+Large data handling : 
+Client side and server side validations : Done
+Data Quality : Done
+Security attacks : Done
+xtream programming : 
+All possible coding practice.

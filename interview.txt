@@ -1,0 +1,1038 @@
+companies :
+Barclays
+citi bank
+mastercard
+
+
+
+
+
+* Trootech : failed in coding
+
+* HSBC financial : failed
+
+project explaination and resume explaination
+hibernate issues faced : eagar, n+1 problem, lots of logs on production of show sql
+automatic project deployment pipeline : jenkins
+rest api advantages : done
+explain each swift message : done
+
+* HSBC Telecommunication : failed
+
+diff between jdk and jre
+overriding neat
+sql server case
+angular
+encryption and decryption types used
+event handling
+how main method execution started
+static handling
+how to take data from aonother application which used mysql database and stored data into sql server application database
+what is controller class
+spring mvc flow
+cloud technologies
+what is optional class
+
+
+* NetWeb Software solutions
+> microservices questions
+> code review tools
+> deployment tools
+> how you handle your more data load
+> in your company does you follow proper sdlc process
+> Exception handling in rest api
+> which data type you will use to store the amount value
+
+* ASH-EHS :
+
+how you will handle very large amount of data in spring boot
+how you have handled deadlock situation
+
+
+* NJ
+
+what is httpSession
+client side validation and server side validation
+what are indexes in sql
+what are function in sql
+what are procedures in sql
+what are triggers in sql
+
+
+* Project Related :
+-------------------
+
+SSLhandle and ssl handshake for client and server communication
+Rabbitmq for message passing
+Apache storm
+Apache ignite
+xml
+xsd
+
+
+
+
+
+
+
+
+1. what is microservice archetecture ?
+-> it is an archetecture style  that structures and application as a collection of small autonomous services, modelled around a business domain.
+-> Microservices are small service that work together
+-> these smaller services communicating with each other directly using light weight protocols like http
+-> it is possible to change or upgrade each service indivisually rather than upgrading in the entire application
+-> one service may down without impacting to others
+-> Easily use different technology for building different microservices
+-> less dependecny loosely coupled
+
+              
+			                                  --------------------/m1-------- microservice - 1
+			  
+client --------API Gateway(single end point)  --------------------/m2 ------- microservice - 2
+
+                                                           Hystrix dashboard                       <--------- config server
+
+                                              --------------------/m3 ------- microservice - 3
+											  
+
+-> gateway can be implemented using zool server or spring cloud gateway
+
+-> Hystrix dashboard : it is a fault tollerence library, when multiple service are running and one of the service is down then we can handle it using this library
+
+-> Eureka Services discovery ( Service Registry) : 
+
+2. How microservices contact each other ?
+
+HTTP will be used to communicate between two services
+
+                             http
+   service1 <-------------------------------------------- > service2
+                             REST   json
+							 
+							 
+calling one service from another service 
+
+restTemplate.getForObject("url", List.class);
+   
+   
+for dynamic url we will use ureka server
+
+
+1. how will you define microservice architecture ?
+2. what is domain driven design ?
+
+
+
+
+
+3. what is bounded context ?
+4. what is polyglot persistance ? can this idea be used in monolythic application as well
+5. why microservices are better than monoliths ?
+6. how microservices are different than SOA ?
+7. what are benefits of using microservices archetecture ?
+8. how to partition large application into microservices architecture ?
+9. how do microservices communicate with each other
+10. what should ne preffered communication style in microservices synchronous or asynchronous ?
+11. Isn't in process communication in monolithic application faster tons of remote network calls in microservices architecture ?
+12. what is difference between Orchestration and Choreography in microservices context ?
+13. how to maintain ACID in microservices archetecture ?
+14. how to achieve zero down time during deployments ?
+
+
+
+* Eureka Server
+---------------
+---------------
+
+-> create a new eureka server
+
+dependency while creating project : eureka server
+
+Annotation: @EnableEurekaServer
+
+properties needs to be add:
+
+server.port=8761
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+eureka.server.wait-time-in-ms-when-sync-empty=0
+
+-> make the other services as eureka client by adding eureka client depedency
+
+@LoadBalanced : to confire
+
+
+-> creating one gateway application
+
+
+* Multithreading :
+---------------------
+---------------------
+
+Producer and consumer issue : 
+
+deadlock situation : if two threads are waiting for each other forever such type of waiting is call deadlock.
+
+by synchronize keyword can we resolve  the issue of deadlock ? No, it is not a solution it is a problem creator, so if there is not a requirement then we should not use a synchroze keyword, synchronize keyword is the only reason deadlock situation is occured
+
+there is no way to handle the deadlock situation but we can take several precautions so that deadlock situation will not occur
+
+deadlock situation example is avail in java 8 new feature workspace
+
+-> deadlock vs starvation :
+
+long waiting state where wait never ends called deadlock situation
+
+long wating state but waiting ends is called starvation
+
+
+* hibernate :
+----------------
+----------------
+
+SessionFactory
+Session
+ServiceRegistry
+
+important properties :
+
+hbm2ddl.auto
+show_sql=true
+
+Annotations :
+
+@Entity
+@Id
+@Table
+@Column
+@Transient : means that column value will not be consider while inserting data, inshort it is excluded
+@Embeddable : to embed one object inside the another table
+@Basic : 
+@UniqueConstraint()
+@Basic(fetch=fetchType.Lazy)
+
+
+--> Storing data in to table
+save(obj)l
+
+--> fetching data from table
+get(object,id);
+
+-> how to use Embeddable Object : @Embedable
+
+-- > Mapping relationships :
+
+onetoone
+onetomay
+manytoone
+manytomany
+
+--> different fetch techniques :
+-> Fetch eagar lazy : this is default fetch type, where it will not fetch the all the tables data, only it will fetch the requested data
+
+--> Hibernate caching : 
+
+first level cache : when we fire the same query in the same session then we can use first level cache, and this is default provided by hibernate
+
+second level cache : when we have a new cache on new session then we use the second level cache
+
+there are different types of third party caches available as below
+ehcahe : every one prefer to go for this cache
+OS
+Swarm
+
+ehcahe : to use this we need some configurations
+
+-> get() vs load()
+
+both the methods result in the object format
+
+get()                                                   load()
+
+eagar initializer method : means                     it is a lazy initializer
+once it get the call it will go to the 
+underlying database and will fetch all
+the records rather then perticular
+record. it there is a associaltion between 
+two classes then as it will get the call it
+will load the current class data as well as 
+associated class data as well
+
+so it will forci     
+
+
+->InvocationHandler      
+
+-> Caches () :
+
+-> hibernate caching level-1 : this is default provide by hibernate so no need of configuration
+
+-> Hibernate caching level-2 : 
+
+ehcache we have used in the application 
+for this add dependency and hibernate-ehcache jar 
+we have to configure this in hibernate configuration file
+
+to make a entity class cacheble we need to use below two annotations
+@Cacheble
+@Cache
+
+by default second level cache is work with only get method
+
+-> Hibernate caching level-2 with query : to make second level cache also work with query we need to specify the property
+
+hibernate.cache.use_query_cache=true
+and also need to make query.setCacheble to true
+
+
+for every operation in cache we need a identifier, without identifier we cannot deal with cache to databse     
+
+persistanceManager : 
+
+primary key generator
+
+update and merge:
+
+entity lifecycle state : 
+
+* Transient state
+• Persistent state
+• Detached state
+• Removed state
+
+-> Hibernate native queries
+-> HQL     : Query class is used to use the HQL
+->SQLQuery : 
+
+-> Hibernate Object States / Persistence Life Cycle : 
+-----------------------------------------------------
+
+The moment we create the object the object becomes in Transient  state
+                                                      ----------
+
+After the we save the object using save() or persist() methods then it is in persistance state : and if we make any changes in object then it is in persistent state and the latest changes will be saved in the database
+                                           -----------
+then next stage is detached() : if we dont want make the changes in database after save method call, then we have to call the session.detached() method after the commit() so that the changes will not be saved in the database. because the object will go in the detached state.
+       
+removed()
+---------
+
+-> when we set the values in the object then it is a transient state and when we save the object it is in the persistant state and after setting values and calling save method , before commit method then the new  data setted after save method is also stored in the database bcoz it is in persistant state.
+
+-> Hibernate get() vs load() :
+
+get will give the object the moment we call the get method
+
+load will give you the proxy object, means ubtil and unless we used that object it will not fetch data from database. so the performance of the load method is good
+
+most of the times we use only get method, but in some situations we need to use the load method where we want to pass only the proxy object where we dont want to use that object
+
+if the get method return a result as null and if try to get the any value from that object the we get NPE
+
+same for the load method we get the ObjectNotFoundException
+
+- > what is JPA ? :
+-----------------
+it is a specification of the different ORM tools like hibernate, ibatis, toplink
+
+
+-. how to hibernate and JPA handles exceptions ?
+
+
+
+
+
+* Lambda Expression :
+----------------------
+----------------------
+
+examples of functional interface :
+
+Runnable
+Callable
+Comparable
+
+
+* Stream API :
+--------------
+--------------
+
+methods :
+filter(predicate)  : true or false, means boolean value function
+map(function) : will return the value
+min
+max
+collect
+
+
+- > REST API design methods :
+
+Accept and respond with JSON
+Handle errors gracefully and return standard error codes
+Allow filtering, sorting, and pagination
+Maintain good security practices
+Cache data to improve performance
+Versioning our APIs
+
+Conclusion
+The most important takeaways for designing high-quality REST APIs is to have consistency by following web standards and conventions. JSON, SSL/TLS, and HTTP status codes are all standard building blocks of the modern web.
+
+Performance is also an important consideration. We can increase it by not returning too much data at once. Also, we can use caching so that we don’t have to query for data all the time.
+
+Paths of endpoints should be consistent, we use nouns only since the HTTP methods indicate the action we want to take. Paths of nested resources should come after the path of the parent resource. They should tell us what we’re getting or manipulating without the need to read extra documentation to understand what it’s doing.
+
+
+- > Spring boot :
+-----------------
+-----------------
+
+Q. what is spring boot and what problems spring boot solves ?
+Q what is spring boot autoconfiguration
+Q how spring boot intenally works and explain run() method in spring boot
+
+Q . featured :
+
+Spring boot starters
+spring boot autoconfiguration
+Externalized Configuratin
+Spring boot actuator
+Easy to use embedded servlet container support
+
+Q. different ways to create a spring boot application
+
+spring initializer
+using eclipse
+using spring boot CLI 
+Q. explain @SpringBootApplication = configuration + componentscan + @EnableAutoConfiguration
+@ComponentScan
+@Configuration : to provide java based configuration
+
+Q. what is spring boot starter and what the diffrent spring boot starters : these are the starter dependencies which contains the set of convenient set of dependenciesn descriptors and also they mentain all the compatible versions
+starter spring data jpaUi
+starter spring web
+starter security
+
+Q. what is spring boot starter parent ? : this provides the default configuration for our spring boot application : like default java version etc
+Q. how many types of projects we can create using spring boot
+
+1) spring boot starter : Utilities, standalone apps, desktop based apps
+2) spring boot starter - web : mvc web application and spring boot rest api application
+3) spring boot starter webflux : spring boot reactive Web Applications
+
+Q. Types of embedded server in spring boot ? 
+Q. how to run spring boot application from command line
+
+using java -jar and 
+spring boot maven plugin : mvnw spring-boot:run
+
+Q. Describe the flow of REST API http requests through the spring boot application
+
+Q. how to create and deploy spring boot war to external Tomcat Server
+
+
+-> spring bean scopes : 
+
+Singleton
+Prototype
+request
+session
+globalsession
+
+
+
+-----------
+
+diff between constructor injection and setter injection
+
+how you will used custom jackson api's in spring
+
+all spring boot annotations
+
+All design patterns
+
+Agile method and devops method
+
+Java, REST APIs, Jenkins, and UI, Linux
+
+Design patterns
+
+Java, REST APIs, Jenkins, and UI, Linux
+
+why main method does not execute before static block
+
+
+
+
+* HSBC interview topic :
+------------------------
+
+project explaination
+about company
+swift messaged you have worked on
+transaction data
+interview question :
+
+core java
+spring frameword
+spring boot anotations
+rest api annotations
+hibernate
+spring data jpa
+database
+
+
+
+
+
+
+* Spring main Topics :
+----------------------
+----------------------
+
+IOC 
+Spring beans
+spring dependency injection
+Bean scopes 
+Bean Autowiring
+Bean lifecycle
+static factory method
+Instance Factory method
+Factory Bean
+Lookup method injection
+Internationalizing
+Bean Post Processor
+Bean factory vs application context
+@PostConstruct and @PreDestroy
+
+
+
+* Questions hints ;
+--------------------
+--------------------
+
+Questions revolved around data mostly
+
+- >How will you check if data quality is maintained  : done
+
+Accuracy
+completeness
+Uniformity
+uniqueness
+timeliness
+security
+
+
+-> How to check the data received is good  : done
+
+-> What things to keep in mind to see the data coming from any source : done
+
+need to make sure our application is secure 
+broken authentication
+sensitive data exposure
+xml external entities
+broken access control
+security misconfiguration 
+Cross site scripting
+insecure desrrialization
+known vernabilities
+insufficient logging and monitoring
+
+- > why we use gateway :
+
+internal api / external api
+api analytics
+api security (authentication,autherization,rate limiting, role based control)
+
+
+
+Few were around qliksense since i have worked on it
+
+One query was given :
+
+if there is an employee table and payslip table, find employees whose salary was not given for a month.
+
+select emp.id, emp.name from employee where not exists(select * from salary where salary.empid=emp.empid)
+
+
+There was one report shown, i was asked to give my inputs to enhance that report
+
+A requirement is there, for emp details, payslip generation, and time sheet management. How many apis will be used to solve the purpose.
+
+Few questions were there regarding the apis and microservices.
+
+Few on the rest apis call.
+
+How to handle language barrier and long distance communication
+
+-> SEcurity attacks :
+
+injection
+broken authentication
+sesitive data exposure
+
+
+
+* project explaination :
+------------------------
+
+what technologies worked ?
+most in core java : collections, multithreading, socket communication
+spring frameword, rest apis
+
+what is project is all about : its a Real time fraud monitoring : basic overview, what it does
+what type of data we process in this application and its a critical data so to maintain the data quality upto the final result we make sure data is validated properly before proceeding and made sure that every transaction is processed and no data loss is there
+to make this process faster we have created multithreaded application and different external servers like rabbitmq, apache storm and apache ignite
+what type of security we have developed here to connect between client and our application
+response time mentain
+
+spring boot standalone application like converters
+
+after this application process completed : 
+
+
+- > how to i have used the encryption and decryption of the data
+
+
+----------------------
+
+* HSBC interview questions :
+
+
+
+
+** REST API :
+--------------
+
+which rest client you have used in rest api
+
+restTemplate
+
+methods : getForObject() and getForEntity and exchange()
+
+
+
+-------------------------------------------------------------------------------------------
+
+* Infosys : 
+--------------
+--------------
+
+1) Asking related to SDLC :  how development package delievery daily routine
+2) what is overriding
+3) what is typecasting
+4) what is the use in loop break and continue
+
+for loop
+java nested for loop
+java for each loop
+java labeled for loop
+java infinitive for loop
+
+
+
+5) what is JIT
+6) program :
+
+foo=1;
+switch(foo){
+case 0;
+System.out.println("10");
+case 1 :
+System.out.println("20");
+case 2;
+System.out.println("25");
+default :
+System.out.println("30");
+}
+
+7) what are components in spring boot
+8) what is IOC and benefits of that
+9) what is spring boot
+10) what is JVM
+11) Lazy initialization in hibernate
+12) what is unique about constructor
+13) What is ArrayList and LinkedList
+14) Can function interface extends or implement another interface
+15) what is diff between List and Set
+16) How can we test restfull service
+17) what is difference between POST and PUT
+18) types of loops in java
+19) how each loop works in java
+20) usage of all the loops
+archetectural flow of the project
+technologies used
+string literal
+SCP
+SCP resides inside heap or somewhere else
+Difference between string literal and new string("")
+All collection
+can we create a linked list ourself ?
+Exception handling all questions
+Design patterns
+oops
+java8 new features ?
+what is fail fast and fail safe collections
+do we follow any naming culture
+SQL :joins, cases, and queries
+
+---------------------------------------------------------------------------------------------------
+
+* Devops stages :
+
+Version control                   ---> Continuous integration             ---> Continuous Delievery                     ---> Continuous Deployment
+maintain diff versions of code         Compile, Validate, Code review,        Deploying the build application to test        Deploying the tested
+                                       Unit testing, Integration testing       server, Performing UAT                        app on the prod server
+                                                                                                                             for release
+
+Source code management                 Continuous Build                        Continuous Testing                            Configuration management
+
+
+> in Continous integration process the Jenkins is used to deploy the application on test servers and perform user acceptance testing using the seleniom tools, and once that is done it will be deploy on the prod servers for release. if this step is done automatically then it is called continous deployment but if it is done manually means if somebody has to approve it then it is called delievery.
+> After deployment it is continous monitored by the tools like Nagios plunk will provide the feedback to the concern teams.after getting feedback the team works on the issue and same process happens again to deploy the new code
+
+
+                                                                                                                         and Containerization
+* Jenkins : 
+
+it is a integration tool , if any developer commits the code and jenkins takes that code create the build using maven add or gradle. once that is done it will test the code on the test server with unit testing with the help of the tools like junit, selenioum and then it will automatically deploy the tested code onto the prod server for release. so tlo deploy the code onto the prod servers we will use the servers like docker puppet etc. after this is done it will be continously monitored with the help of the tools  like nagios plunk etc..
+
+. CI : continous integration - > it is like a software development life cycle now how does it work so as you can see here 
+
+* what is CI / CD
+
+Version control --> Build --> Unit Test --> Deploy --> Auto Test --> Deploy to prod --> feedback and continue the same process based on the feedback
+
+> to make the ci cd platform secure itself and promote improved security for the applications build with it so by keeping these objectives in mind the new shared continuous delievery tools team sought to support the ci cd prctces that supported security practices without stifling developers innovation with reference to speed and security . for this the deploymentment with security is done bases on the cloud-based jenkins platform they use the roll based access control plugin to implement an authorization strategy in which security rules were assigned to a group of users after the initial platform rollout 
+
+* importants of Jenkins : it is a open source automation tool written in java with plugins build for continous integration purpose. 
+Jenkins provides us the various interfaces and tools in order to automate the entire process.
+After the commit to the Git -- > jenkins will pull that code and it will move it to the commit phase where code is commited to every branch and then jenkins moves it and then it goes to the build phase where it will compile the code, now after the code is compiled and after the code is validated and reviewed the code is tested and once all tests are done then it will be packaged into the war file or jar file.
+Jenkins role is only till the application is packages.
+
+Now it has to be delievered and so we need some tools to deliever the product, there we use the docker
+
+* Docker : docket is like a vertualization environment which we can create on the fly, so it takes just afew seconds to create a entire server and deploy something on it. so to deploy the software we need to environment which will replicate the production environment and that's what docker provided. So the docket is not exacltly a virtual machine, it creates a image like a virtual machine and then it can run as a container and it will completely replicate a perticular platform and environment where we can deploy out artifacts or jars or wars and any other kind of fils and then we can test those files.
+
+
+* Cloud Technologies :
+----------------------
+
+-- > Service Models :
+
+> Iaas : Infrastructure as a service :
+provides virtualize computing resource over the internet 
+no worries about underlying physical machine
+Abstract the user from the physical machine
+
+Here Data, Application, runtime, middleware, OS taken care by us, and below everything else is taken care by this model
+virtualization, Server, Storage, Networking
+
+ 
+> Paas : Platform as a service : it gives you a platform to build your own applications, Here data and applications are managed by us and everything else is taken care by this model
+Runtime, middleware, OS, virtualization, Server, Storage, Networking
+
+
+> Saas : Software as a service like a gmail
+
+Here only data is manage by us and everything else like below is taken care by this model
+
+Application, Runtime, middleware, OS, Virtualization, Servers, Storage, Networing
+
+-- > Deployment Models : it means the different types of clouds that are there in the market, those are below
+
+> Public Cloud : makes everything like application, resources, storage available over the internet
+> Private Cloud : offers hosted services available to the limited number of people behind firewall so it minimizes its security concerns
+
+this gives direct control over their data
+
+
+> Hybrid Cloud : it is a combination of both
+
+* Different cloud providers :
+
+Amazone web services : this is popular because its compute capacity is 6 larger than other cloud platforms
+Google Cloud Platform
+Microsoft azure
+IBM cloud
+
+
+select name from employee
+inner join on department
+where employee.id = department.id
+
+ritesh singh
+
+
+
+
+-------------
+
+TEKSystems Azhar call
+
+> how many ways we can read properties in spring boot
+
+
+
+* do all the annotations of controller to read the request data
+* how many ways two microservices can communicate with each other
+
+there are two ways we can communicate microservices
+
+1. Synchronous communication. In this pattern, a service calls an API that another service exposes, using a protocol such as HTTP or gRPC. This option is a synchronous messaging pattern because the caller waits for a response from the receiver.
+
+2. Asynchronous message passing. In this pattern, a service sends message without waiting for a response, and one or more services process the message asynchronously.
+
+
+-------------
+
+--- TESKSystem hsbc manager call ----
+
+> agile :
+----------
+----------
+* scrumm : 
+scrumm is a framework within which people can address complex adaptive problems while productively and creatively delievering products of the highest possible value.
+
+- scrumm is light weight
+- it is simo=ple to understand
+- it is very difficult to master scrumm itself is a simple framwork for effective team collaboration based in agile and it is the opposite of the big collection of interwoven mandatory components which are the part of the previously discussed alternatives.
+- scrumm promotes developing products through processes techniques and practices with various iterations and increments to deliever maximum values.
+- the first cycle of your planning building testing previwing shall be called your first iteration and the second one will be second iteration and so on.
+- and these iterations are called sprints and at each springt you have potentially developed delieverable software where each sofware version is much better than the previous one.
+- and each spring is repeated until our product is complete.
+
+* what are the roles in the scrumm ?
+1) the person who has a bright ideas and also who is a product owner
+2) second the scrumm master who is responsible to implementing the agile and preparing the team to follow the agile approach and making them more efficient and finally you have the team. 
+
+* what is scrumm framework : 
+
+
+
+kanban
+xtream programming
+
+
+Devops
+Can you do your own deployment nd all
+
+
+* Managerial Round Questions *
+-------------------------------
+-------------------------------
+
+project flow
+technologies used and versions used
+what is the reporting tool used
+
+>build management tool used in current project
+Maven / Gradle build tools 
+Junit and mackito : testing tools
+Log4j / SL4j : logging tools
+Putty/ winscp/ filezilla : for log monitoring
+Git : repository tools
+PMD / Sonar Qube : code review tools
+
+> Design patterns used in your project :
+singleton
+strategy
+mvc
+cache design pattern
+
+> what is Onshore (the team members which are working on the client location) and OfShore (peoples who are not working in client location is called OfShore team) team
+
+> have you ever involved in UAT Triaging :
+> do you know UML diagrams
+> which tools are used to create a TDD
+> how you will get FDD in your company
+> what is unit testing
+> tell me some junit annotations available
+> do you know mocking and could you please explain the scenario where you used mocking
+> how will you debug in the production environment
+> which logging levels you have used
+> how to set log levels in production environment
+> what is splunk
+> how the exception handling is done in your project
+> what is the diff between authentication and autherization
+> how to secure rest api
+> client side authentication
+> what is swagger
+> Bug reporting you used in your project
+> heap dumps and thread dumps
+> how builds are deployment on production in your project
+> what is pipeline in jenkins
+> which tool you use to review the source code
+> code coverage tool used in you application
+> why do you want to change your current job
+> if one of your team member not completing task on time then how you will deal with it
+> what if you want to add new columns in hibernate 
+> how to you do documentation for the project
+> where you want see yourself after 3 years
+
+
+what are your roles and responsibilities
+chanllenges you faced and how you handled it
+deployment process steps
+how do you manage security like credentials and data security in project
+how do you write the unit test cases
+have you ever involved in unit testing and integration testing
+how will you handle large amount of data
+
+> Roles and responsibilities
+BRD(business requirement document) and FDD(functional design document)
+mentaining query logs in the form of in excel file
+Sending MOM (minutes of meeting)
+Preparing TDD (technical design document)
+unit testing using Junit or mackito
+code review
+pushing code to repositories
+integration testing
+capturing the reports of the testing results
+support for SIT and UAT phases
+participating in Triage calls
+> how you get the requirement
+> explain about project archetecture :
+> different components used in the project
+> to whome you report
+> Environment available for applications
+Local
+Dev
+SIT (system integration testing)
+UAT (user acceptance testing)
+Pilot (Pre-Production)
+Production
+> which sdlc methodology you follows
+agile
+- in agile what is the diff between scrumm and spring
+
+Devops and agile
+
+> Agile Questions :
+--- ---- ---- -----
+
+what is agile ?
+- agile is a methodology we can say which adopts to the dynamic changes of the business requirements. it is a set of methods and practices that focuses on iterative development.
+
+diff between waterfall model agile ?
+- agile is a continuous developement lifecyclet model and software development and testing
+- and waterfall is a linear sequential lifecycle model for developing and testing software
+
+- agile model is a flexible in the way of building a software model
+- waterfall is a rigid, structured way of software development
+
+- agile is highly collaborative because there the involvement of manager and seniors is happen in every iteration
+- it is less flexible not allows team to collaborate. because the steps are predefined
+
+- the entire process of developement is divided into the iterations which are of short period we call it as a sprints. so at every iteration a working model of the software will be released.
+- in this the process is sequencial
+
+- initial planing can be change after the development started
+- requirements cannot be change after the project development begins
+
+- developement and testing happens parallelly 
+- testing phase comes after the developement completed
+
+> what are some important parts of agile process
+Customer satisfaction
+welcome changes
+delieverd frequently
+work together
+motivated team
+face to face conversation
+working software
+constant pace
+good design
+simplicity
+self-organized
+reflect and adjust
+
+> Explain iterative and incremental developement in agile
+
+> what are the different types of agile methodologies
+
+* Extreme programming :
+
+it is a framework that enables teams to create high quality software and improves their their quality of life
+it enables software developement with appropriate engineering practices
+
+* Kanban :
+this process is used to desing, manage and improve the flow of systems
+organizations can visualize their flow of work and limiting their work inprogress
+it enables better management of work as it moves through the process 
+
+* Lean :
+
+it is a set of tools and principles that aim to identify and remove waste to increase the speed of process development 
+it maximizes the value to the client , ensuring waste is minimized 
+
+* Scrum : it is a framework that is used by the teams to establish 
+
+* Crystal :
+
+> What are principles of agile testing ?
+
+testing continously
+obtain feedback continously
+all team roles
+
+> what are the agile matrix thay needs to be focused on ?
+measuring the burndown of the delieverables, which is usually represented using burndown chart
+velocity
+lead time
+cycle time
+code quality
+code covered in unit testing
+deployment success rate
+net promoter score
+
+> popular agile tools
+
+> Devops Questions :
+----- ------ ------ ---
+
+what is bluegreen deployment
+how do you do the hot deployment
+what is you rollback strategy
+have you used jenkins for deployment
+
+what jenkins plugins have you used : maven , gradle for building and Cleopatra for testing Git, upstream/downstream plugin for connecting the codes, html publish plugin to pulish the test reports
+
+> Jenkins :
+--- --- --- --
+
+Azhar calls :
+
+supporting activities
+sql procedures
+team handling                                                                        
+application support tools like matrix check
+
+
+
+
+
+---------------  Thompson Reuters --------------------
+
+Write a function to get Nth number of Fibonacci series.
+Check if the number is made of exact power of 2. i.e. 2014, 2,8, 64.
+Remove duplicates from list. Interviewer did not care to clarify whether operation should be in-place or extra space can be used.
+Diff between hibernate's get and load methods.
+What is waitExecute method in Struts 2?
+What is final, finally, finalize?
+Diff between HashTable and HashMap
+How ConcurrentHashMap works internally?
+Star patterns and some basic programs. like reverse a string and factorial and Fibonacci series programs
+What is the difference between Interface and Abstract Class in Java?
+Does Java support multiple inheritance? Is there any way in which it can be achieved in Java?
+What is the difference between Composite Key and Primary Key?
+What is the difference between SQL Functions and a Stored Procedure?
+What is a unique key?
+Can we overload main method in Java?
+What are the different types of exceptions supported in Java?
+Can we have more than one Primary Key for a table?
+Pseudo code writing.
+
+> Java, OOPS concept and they covered all the basic questions from all web, Middle ware, Spring, ORM tool, basic databse questions like Primary key, foreign key, normalization, etc . In the end a problem was explained and asked for a programmatical solution
+
+perform search operation on multidimensional array
+the only code pair question was one of the puzzles from Hacker Rank.
