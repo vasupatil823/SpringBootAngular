@@ -1,0 +1,38 @@
+> run the mssql server image
+
+docker run -p 1401:1433 --name mssqlcontainer -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=V@su@2911 -e SQL_ROOT_USER=sa -e SQL_DATABASE=LOCAL_TEST_DB -d mcr.microsoft.com/mssql/server
+
+> to connect the above container through ssms use below
+
+in server name use : localhost\mssqlcontainer,1401
+username : sa
+password : V@su@2911
+
+> make the changes in application.properties file to use the sql server image properties, below is the sample file.
+
+spring.datasource.url=jdbc:sqlserver://${SQL_HOST:localhost}:${SQL_PORT:1433};databaseName=${SQL_DATABASE:LOCAL_TEST_DB};encrypt=false;
+spring.datasource.username=${SQL_ROOT_USER:sa}
+spring.datasource.password=${SQL_ROOT_PASSWORD:vasu123}
+spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+
+> to create the connection between our application and mssql container we need to create the network as below
+
+docker network create mssqlnetwork
+
+> connect the mssql to this network
+
+docker network connect mssqlnetwork mssqlcontinername
+
+> create the image of the spring boot app as below
+
+docker build -t bootimage .
+
+> run the application image as below
+
+docker run -p 8090:8080 --name bootcontainer --net mssqlnetwork -e SQL_HOST=mssqlcontainer -e SQL_PORT=1433 -e SQL_DATABASE=LOCAL_TEST_DB -e SQL_ROOT_USER=sa -e SQL_ROOT_PASSWORD=V@su@2911 bootimage
+
+
+
+
