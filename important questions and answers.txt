@@ -1,3 +1,16 @@
+
+>> Tell me about yourself :
+
+- First of all thanks to the interviewer to give the opportunity or to schedule this interview.
+- Tell your name and about your graduation and describe yourself as below
+- I am a software engineer and have a ----- years of experience
+- What are the various technologies you have worked on and on what latest technologies you have worked recently.
+- Tell about the current company domain and total different domain you have currently worked. (like banking domain, healthcare domain)
+- tell about in what are you are best. like integrating or using third party api or libraries in the existing application or using them and provide some examples you have implemented. and tell some achievements.
+- what was your role and how it changed over the years. what is your current role in your company.
+- review the JD well and answer how you are fit for this role and their requirement. for ex. the requirement is for kafka then tell about your experience in kafka and other things which aligns with their requirement.
+
+
 >> why HashSet is so important data structure ? : because it takes same time for adding,searching and removing the objects so its time complexity.
 
 >> In java we implement the hashmap with use of array of linked list. means hashmap internally uses array and linked list.
@@ -1030,3 +1043,59 @@ Agile flow --  > product owner will collect the requirment from customer or end 
 			   > Burndown report is created by scrum master which shows the performance of the team.
 			   > sprint review meeting where show the demo to the product owner.
 			   > sprint retrospective meeting.
+			   
+			   
+			   
+			   
+> Docker Swarm :
+
+>> Zensar interview questions.
+
+@Qualifier
+multiple inheritance
+diamond problem
+Explain solid principles
+docker
+kubernetes
+how you monitor your application.
+have you used the tools like splunk for monitoring your application.
+
+- write a code for below.
+
+  i have an array of cities, in that i want to find the city which higher number of times in array.
+  
+  import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        String[] cities = {"New York", "London", "Paris", "London", "Tokyo", "London", "Paris", "London"};
+        String mostFrequentCity = findMostFrequentCity(cities);
+        System.out.println("The most frequent city is: " + mostFrequentCity);
+    }
+
+    public static String findMostFrequentCity(String[] cities) {
+        Map<String, Integer> cityCount = new HashMap<>();
+
+        // Count occurrences of each city
+        for (String city : cities) {
+            if (cityCount.containsKey(city)) {
+                cityCount.put(city, cityCount.get(city) + 1);
+            } else {
+                cityCount.put(city, 1);
+            }
+        }
+
+        // Find the city with the highest count
+        int maxCount = 0;
+        String mostFrequentCity = null;
+        for (Map.Entry<String, Integer> entry : cityCount.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                maxCount = entry.getValue();
+                mostFrequentCity = entry.getKey();
+            }
+        }
+
+        return mostFrequentCity;
+    }
+}

@@ -8,6 +8,27 @@ in server name use : localhost\mssqlcontainer,1401
 username : sa
 password : V@su@2911
 
+> After successfully start of mssql container we can execute the queries inside the container using below commands from command line.
+
+docker ps : this command will show the list of active containers.
+docker exec -it <mssqlcontainer_name> /bin/bash : this command will open the bash shell inside the container. 
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P V@su@2911 : this command will login to the mssql server inside the container. after that we can execute any queries. below is example query.
+
+select * from employee;
+GO
+
+> The above only runs the mssql container, here if we want to create the custom database while container initialization then we need to run the docker as below. for example here we need the database LOCAL_TEST_DB db. but it will not be allready there so we can create it as below.
+
+docker run -p 1401:1433 --name mssqlcontainer1 -e ACCEPT_EULA=Y -e MSSQL_SA_PASSWORD=V@su@2911 -e SQL_ROOT_USER=sa -v "D:/projects/docker projects/dbscripts/init-scripts.sql:/docker-entrypoint-initdb.d/init-scripts.sql" -e SQL_DATABASE=LOCAL_TEST_DB1 -d mcr.microsoft.com/mssql/server
+
+init-scripts.sql : this file containes the database creation script which will be executed. we need to add the scripts here those need to be executed
+
+docker exec -it mssqlcontainer1 ls /docker-entrypoint-initdb.d/ : this command list out the scripts available inside the container.
+
+ocker exec -it mssqlcontainer1 /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P V@su@2911 -i /docker-entrypoint-initdb.d/init-scripts.sql : This command manually creates the database inside the container if the database is not created automatically using above docker run command.
+
+
+
 > make the changes in application.properties file to use the sql server image properties, below is the sample file.
 
 spring.datasource.url=jdbc:sqlserver://${SQL_HOST:localhost}:${SQL_PORT:1433};databaseName=${SQL_DATABASE:LOCAL_TEST_DB};encrypt=false;
@@ -32,6 +53,61 @@ docker build -t bootimage .
 > run the application image as below
 
 docker run -p 8090:8080 --name bootcontainer --net mssqlnetwork -e SQL_HOST=mssqlcontainer -e SQL_PORT=1433 -e SQL_DATABASE=LOCAL_TEST_DB -e SQL_ROOT_USER=sa -e SQL_ROOT_PASSWORD=V@su@2911 bootimage
+
+
+
+>>>>>>>> Above configuration is for running two different applications as two different container and communicate them by creating the network >>>>>>>>>>
+
+> We can do this all stuff by writing the single file which will run all these multiple container at once and we dont need to run the images saprately.
+> We need to create the docker file which will run all the container with only single command and will handle the communication between them.
+> below is the example docker-compose file for above two images.
+
+version: '3'
+services:
+  dbservice:
+    image: mcr.microsoft.com/mssql/server
+    container_name: mssqlcontainer
+    environment:
+      - MSSQL_SA_PASSWORD=V@su@2911
+      - ACCEPT_EULA=Y
+      - SQL_ROOT_USER=sa
+      - SQL_DATABASE=LOCAL_TEST_DB
+    volumes:
+      - ./data:/var/lib/mssql
+    ports:
+      - 1401:1433
+    networks:
+      - mssqlnetwork
+  appservice: 
+    build: ./bootapp
+    depends_on:
+      - dbservice
+    environment:
+      - SQL_HOST=mssqlcontainer
+      - SQL_PORT=1433
+      - SQL_DATABASE=LOCAL_TEST_DB
+      - SQL_ROOT_USER=sa
+      - SQL_ROOT_PASSWORD=V@su@2911
+    ports:
+      - 8090:8080
+    networks:
+      - mssqlnetwork
+networks:
+  mssqlnetwork:
+  
+
+> We need to create the file with exact name as docker-compose.yaml with above content.
+
+- We need to create the seperate service for each image for example in above file we have dbservice for mssql server image and appservice for spring boot application.
+- Here for appservice we need to provide path of the dockerFile we have created in build key. here the path is ./bootapp. this path is of where the docker-compose.yaml file is available. for example docker-compose file is on path D:\projects\docker projects\demo docker\docker compose\docker-compose.yaml then there will be a bootapp folder and in that the dockerFile will be kept.
+- The networks key here creates the network here if it is not allready there. and we need to use the same network in all the services for communication.
+- here we have used depends_on key in appservice which indicates that the appservice container will not start if the dbservices is not startd successfully.
+
+> After the docker compose file is created we need to run the below command and everything will be started.
+
+docker-compose up
+
+
 
 
 
