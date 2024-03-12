@@ -1053,6 +1053,7 @@ Agile flow --  > product owner will collect the requirment from customer or end 
 
 @Qualifier
 multiple inheritance
+hashmap internals
 diamond problem
 Explain solid principles
 docker
@@ -1099,3 +1100,414 @@ public class Main {
         return mostFrequentCity;
     }
 }
+
+
+
+------------------------ Solid Principles --------------------------
+
+> The goal of the solid principle is a coding standards that all developers should have a clear concept for developing software properly to avoid bad design.
+> Solid principles will help to reduce the code complexity, the coupling between the classes, seperating responsiblity of each class and defining their relations.
+> In java solid priciples are an object oriented approach that are applied to software structure designing.
+> It is conceptualized by robert c. martin.
+> There are 5 principles. these 5 principles changes the world of object oriented programming, also changed the way of writing software.
+> It also ensures that the software is moduler, easy to understand, debug and easy to refactoring.
+
+> SOLID stands for :
+
+>> S : Single responsinility principle : 
+
+- This principle states that a class should have only one reason to change.
+- The class should have a single responsibility or single job or songle purpose.
+-  Example : 
+
+   In signle controller class we will write,
+      
+	  1. validations
+	  2. business logic
+	  3. calling backend system
+	  4. request and response preperation.
+	The above approach violates the SRP. and it will impact code maintainability, readability, code understandablility. so will violate the SRP. So to resolve this we have to create the each seperate class for each process, like for validation, business logic, calling backend systems, and request and response preparation.
+
+
+
+>> O : Open closed priciples
+
+- This principles states that software entities (classes, modules, functions, etc....) should be open for extension and closed for  modification.
+
+i.e we should able to extend class behaviour without modifieng existing code.
+
+
+Examples : 
+
+ public class NotificationService {
+ 
+      public void sendOTP(String medium){
+	  
+	    if("email".equals(String medium)){
+		    // write the logic for sending otp using email api provider
+		}
+		
+		if("sms".equals(medium)) {
+		   // write the logic for sending the otp usig sms
+		}
+	  
+	  }
+ 
+ }
+
+* Problem : current logic will send the notification via email, sms. but in future if we want send the notifications using whatsapp number then we need to modify source code in notification service.
+
+           - to overcome these problems what OCP says "open for extension but close for modification".
+		   - i.e it is not recommended to modify the notificationservice for each OTP feature it will violate OCP.
+		   
+* Solution : 
+
+          -  to overcome this we need to design our code. in such way that everyone can reuse your feature by just extending it and if they need any customization they can extend it and add their feature on top of it. for this we should design as below
+		  
+		
+	public interface NotificationService {
+	
+	public void sendOTP(String medium);
+	
+	}
+	
+	1. Email NotificationService
+	
+	public class EmailNotificationService implements NotificationService {
+	
+	   public void sendOTP(String medium) {
+          // write the logic for sending otp using email api provider	   
+	   }
+	
+	}
+	
+	2. Mobile NotificationService
+	
+	public class MobileNotificationService implements NotificationService {
+	
+	   public void sendOTP(String medium) {
+          // write the logic for sending otp using mobile api provider	   
+	   }
+	
+	}
+	
+	3. Whatapp NotificationService
+	
+	public class WhatsappNotificationService implements NotificationService {
+	
+	   public void sendOTP(String medium) {
+          // write the logic for sending otp using whatsapp api provider	   
+	   }
+	
+	}
+
+
+
+
+>> L : Liskov substitution principle.
+
+   - This principle states that derived or child classes must be substitutable for their base or parent classes.
+   - i.e  if class B is a child class of class A, then we should able to replace A with B, without interuppting behaviour of the programme.
+
+   - Example :
+
+     class A {
+     
+	 }
+
+     class B extends A {
+
+     }	 
+	 
+	 A a = new B();
+	 B b = new B();
+	 
+	 public abstract class SocialMedia {
+	 
+	 public abstract void chatwithFriend();
+	 public abstract void groupvideocall();
+	 public abstract void publishpost();
+	 public abstract void sendphotosandvideos();
+	 
+	 }
+
+   -- Some of the social medias are facebook, whatsapp, twitter
+   
+   public class FaceBook extends SocialMedia {
+   
+          public abstract void chatwithFriend() {
+                  //logic
+          }
+	      public abstract void groupvideocall() {
+	             //logic
+	      }
+	      public abstract void publishpost() {
+	            //logic
+	      }
+	      public abstract void sendphotosandvideos() {
+	           //logic
+	      }
+   
+   }
+   
+   
+   
+     public class whatsapp extends SocialMedia {
+   
+          public abstract void chatwithFriend() {
+                  //logic
+          }
+	      public abstract void groupvideocall() {
+	             //logic
+	      }
+	      public abstract void publishpost() {
+	            // this feature is not there in whatsapp
+	      }
+	      public abstract void sendphotosandvideos() {
+	           //logic
+	      }
+   
+   }
+   
+   * Problem
+   Here,
+   
+   SocialMedia media = new whatsapp();    //wrong because whats app does not support publicpost() feature. it is just for chatting.
+   
+   So this application does not follow the LSP.
+   
+   * Solution : 
+     
+     to overcome this problem we should write the code as below which will follow LSP
+
+	 
+    public interface SocialMedia {
+	 
+	     public abstract void chatwithFriend();
+	     public abstract void sendphotosandvideos();
+	 
+	 }
+	 
+	 
+	 public interface SocialPostManager,  {
+	 
+	     public abstract void publishpost(Object post);
+	 
+	 }
+	 
+	 public interface VideoCallManager {
+	 
+	     public abstract void groupvideocall(String[] users);
+	 
+	 }
+	 
+	 
+Note : We have segreagate specific functionality to saperate classes to follow LSP as below.
+
+     public class Facebook implement SocialMedia,SocialPostManager,VideoCallManager   {    //because it sipports all
+	 
+	 }
+	 
+	 public class whatsapp implement SocialMedia,VideoCallManager   {    //
+	 
+	 }
+   
+  - Advantages of LSP :
+    code reuseability
+	easier maintainance
+	reduced coupling
+
+
+>> I : Interface segregation principle
+
+     - No client should be forced to depend on methods that it does not used.
+	 - this principle states that we should split our interfaces into smaller and more specific one interfaces.
+	 - ISP ask you to create a different interfaces for diff responsibliltiest that is don't group unrelated behaviour in one interface, we should break if we have allready an interface with the many resposibilities and the implemeentor does not need all this stuff.
+	
+	
+  * Problem :
+    
+	- polluting the interfaces in project developement.
+	
+	- Examples 1:
+	  
+	  public interface CardOffers {
+	    
+		public void getRewardPointsAsCreditBalance();
+		public void getCashbackAsCreditBalance();
+		public void getCreditHistory();
+		public void doPayments();
+		
+	  }
+	  
+	  below two interfaces are seggeagate
+	  
+	  public interface CreditCardOffers {
+	    
+		public void getRewardPointsAsCreditBalance();
+		public void getCashbackAsCreditBalance();
+		public void getCreditHistory();
+		
+	  }
+	  
+	  public interface DebitCardOffers {
+	    public void getRewardPointsAsCreditBalance();
+		public void doPayments();
+		
+	  }
+	  
+	  - Example 2 :
+	    
+		public interface UPIPayments {
+		
+		   public void payMoney();
+		   public void getScratchCard();
+		   public void getCashbackAsCreditBalance();
+		
+		}
+		
+		here upi payments are google pay and paytm
+		
+	  * problem statement :
+	     
+		 - google pay supports all the above features and this can be implemented UPIPayments interface but paytm doesn't support getCashbackAsCreditBalance() feature, so here we shouldn't force paytm client to override this method by implementing UPIPayments interface.
+	
+	  * Solution : 
+	     
+		- We need to segreagate interface based on the client need, so it supports ISP. we can design something like below.
+		
+		 public interface UPIPayments {
+		
+		   public void payMoney();
+		   public void getScratchCard();
+		
+		}
+		
+		public interface CashbackManager {
+		
+		   public void getCashbackAsCreditBalance();
+		
+		}
+		
+		
+		
+
+
+D : Dependency inversion priciple
+
+    - this principle states that we must use abstract classes and interfaces instead of concrete implementation.
+	
+	* problem statement :
+	  
+	  - we will go to any mall for shopping to buy something, and we decide to pay for it using card.
+	  - when we will give card to check for making the payment, here that clerk guy does not bother to check what kind of card you have given. 
+	  - even if we given debit or credit card it will not event matter they will simply swipe it. 
+	  - This is what abstraction between clerk and customer to relay on card processing.
+	  
+	* Example 1 :
+	  
+	  public class DebitCard {
+	  
+	     public void doTransaction(int amount) {
+		 
+		    //logic for debit card transaction
+		 
+		 }
+	  
+	  }
+	  
+	  public class CreditCard {
+	  
+	     public void doTransaction(int amount) {
+		 
+		    //logic for credit card transaction
+		 
+		 }
+	  
+	  }
+
+     - Now with these two cards customer went shopping mall and purchased some order and decided to pay using creadit card.
+	 
+	 public class ShoppingMall(){
+
+}		{
+	 
+	    private DebitCard debitCard;
+		
+		public ShoppingMall(DebitCard debitCard){
+		   this.debitCard=debitCard;
+		}
+	 
+	    public void doPayment(Object order, int amount){
+		    debitCard.doTransaction(amount);
+		}
+	 
+	 
+	  main(String[] args) {
+	     DebitCard debitCard = new DebitCard();
+		 ShoppingMall shoppingMall=new ShoppingMall(debitCard);
+		 shoppingMall.doPayment("Order name",1000);
+	  }
+	 
+    }
+	
+   * Note : this is wrong design of coding, here shoppingmall is tigtly couplled with the DebitCard. if user trying to pay bill with the creadit card then it will not work for credit card.
+
+   * Solution :
+
+	- if we want for DIP we need to design our application in such way that shoppingmall application should accept any type of card (it should not care wheather it is debit card or credit card)
+	
+	- To simplyfy designing pricniple we need to write interface called BankCard.
+	
+	  public interface BankCard {
+
+
+}	  {
+	    public void doTransaction(int amount);
+	  }
+	  
+	  public class CreditCard implements BankCard {
+	    
+		public void doTransaction(int amount) {
+		
+		  // credit card logic
+		
+		}
+	  
+	  }
+	  
+	  public class DebitCard implements BankCard {
+	    
+		public void doTransaction(int amount) {
+		
+		  // debit card logic
+		
+		}
+	  
+	  }
+	  
+	  
+	  public class ShoppingMall {
+	  
+	     private BankCard bankCard;
+	  
+	     public ShoppingMall(BankCard bankCard){
+		     this.bankCard=BankCard bankCard;
+		 }
+		 
+		 public void doPayment(Object order, int amount){
+		    bankCard.doTransaction(amount);
+		}
+		 
+		 main(String[] args) {
+		 
+		     BankCard bankCard = new DebitCard();
+			 ShoppingMall shoppingMall = new ShoppingMall(bankCard);
+			 shoppingMall.doPayment("ordername",1000);
+		    
+		 
+		 }
+	  
+	  }
+	  
+	Note : if we observer, the shopingmall is loosely couples with bankcard. and type of card process the payment without any impact, which proofs DIP.
